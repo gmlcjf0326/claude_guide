@@ -1,5 +1,4 @@
 {
-  "model": "opusplan",
   "permissions": {
     "deny": [
       "Read(./**/*.pem)",
@@ -45,7 +44,17 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Read|Edit|Write|MultiEdit",
+        "matcher": "Read|Edit|Write|MultiEdit|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-secrets.sh\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
@@ -81,6 +90,6 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/statusline.sh\""
+    "command": "bash .claude/hooks/statusline.sh"
   }
 }

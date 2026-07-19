@@ -30,7 +30,7 @@ fi
 N=0; [ -f "$CNT" ] && N="$(cat "$CNT" 2>/dev/null || echo 0)"
 case "$N" in (*[!0-9]*|"") N=0;; esac
 N=$((N+1)); echo "$N" > "$CNT" 2>/dev/null
-if [ "$N" -eq 25 ] || [ "$N" -eq 50 ] || [ "$N" -eq 75 ]; then
+if [ "$N" -ge 25 ] && [ $((N % 25)) -eq 0 ]; then   # 25, 50, 75, 100, … — never goes silent
   MSGS="CO-PILOT: $N edits since the last PROGRESS/checkpoint update — unprotected work is accumulating. Finish the current small step, then run /checkpoint (and /compact if the session is long). Relay this suggestion to the user."
 fi
 

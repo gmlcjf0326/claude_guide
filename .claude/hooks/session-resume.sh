@@ -6,7 +6,11 @@ set -u
 
 ROOT="${CLAUDE_PROJECT_DIR:-.}"
 D="$ROOT/docs"
-[ -d "$D" ] || exit 0
+if [ ! -d "$D" ]; then
+  # Never degrade silently: no docs/ means a partial install or a fresh project.
+  echo "=== COMPASS: docs/ not found. If COMPASS was just installed, the docs/ folder may not have been copied (see START_HERE §4 install trap) — restore it, or run /setup to begin. ==="
+  exit 0
+fi
 
 FOUND=0
 echo "=== COMPASS AUTO-RESUME (from docs/) ==="
@@ -23,12 +27,12 @@ if [ -f "$D/PROJECT.md" ]; then
 fi
 
 [ -f "$D/PROGRESS.md" ] && { echo "--- PROGRESS.md (last 30 lines) ---"; tail -n 30 "$D/PROGRESS.md"; FOUND=1; }
-[ -f "$D/TODO.md" ] && { echo "--- TODO.md (open items) ---"; grep -E '^\s*[-*] \[( |~|!)\]' "$D/TODO.md" | head -n 25; FOUND=1; }
+[ -f "$D/TODO.md" ] && { echo "--- TODO.md (open items) ---"; grep -E '^[[:space:]]*[-*] \[( |~|!)\]' "$D/TODO.md" | head -n 25; FOUND=1; }
 
 # --- Situation engine: first match wins, exactly ONE suggestion ---
 SUGGEST=""; WHY=""
-WIP_LINE="$(grep -m1 -E '^\s*[-*] \[~\]' "$D/TODO.md" 2>/dev/null | sed 's/^[[:space:]]*[-*][[:space:]]*//')"
-OPEN_LINE="$(grep -m1 -E '^\s*[-*] \[ \]' "$D/TODO.md" 2>/dev/null | sed 's/^[[:space:]]*[-*][[:space:]]*//')"
+WIP_LINE="$(grep -m1 -E '^[[:space:]]*[-*] \[~\]' "$D/TODO.md" 2>/dev/null | sed 's/^[[:space:]]*[-*][[:space:]]*//')"
+OPEN_LINE="$(grep -m1 -E '^[[:space:]]*[-*] \[ \]' "$D/TODO.md" 2>/dev/null | sed 's/^[[:space:]]*[-*][[:space:]]*//')"
 GIT_DIRTY=""
 git -C "$ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1 && GIT_DIRTY="$(git -C "$ROOT" status --porcelain 2>/dev/null | head -1)"
 SPEC_EMPTY=0
@@ -55,7 +59,7 @@ AWAY=""
 # Map staleness heuristic: TODO moved while the map didn't, across ≥5 completed tasks
 MAP_NOTE=""
 if [ -f "$D/CODEBASE_MAP.md" ] && [ "$D/TODO.md" -nt "$D/CODEBASE_MAP.md" ] 2>/dev/null; then
-  DONE_COUNT="$(grep -cE '^\s*[-*] \[x\]' "$D/TODO.md" 2>/dev/null)"
+  DONE_COUNT="$(grep -cE '^[[:space:]]*[-*] \[x\]' "$D/TODO.md" 2>/dev/null)"
   case "$DONE_COUNT" in (*[!0-9]*|"") DONE_COUNT=0;; esac
   [ "$DONE_COUNT" -ge 5 ] && MAP_NOTE="Note: CODEBASE_MAP.md is older than recent task activity — spot-check it, consider /map."
 fi

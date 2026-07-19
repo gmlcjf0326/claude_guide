@@ -24,8 +24,8 @@ if [ -f "$D/PROGRESS.md" ]; then
   [ -z "$PHASE" ] && PHASE="-"
 fi
 if [ -f "$D/TODO.md" ]; then
-  OPEN="$(grep -cE '^\s*[-*] \[ \]' "$D/TODO.md" 2>/dev/null)"
-  WIP="$(grep -cE '^\s*[-*] \[~\]' "$D/TODO.md" 2>/dev/null)"
+  OPEN="$(grep -cE '^[[:space:]]*[-*] \[ \]' "$D/TODO.md" 2>/dev/null)"
+  WIP="$(grep -cE '^[[:space:]]*[-*] \[~\]' "$D/TODO.md" 2>/dev/null)"
 fi
 case "$OPEN" in (*[!0-9]*|"") OPEN=0;; esac
 case "$WIP" in (*[!0-9]*|"") WIP=0;; esac

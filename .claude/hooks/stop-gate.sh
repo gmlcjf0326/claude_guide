@@ -24,7 +24,7 @@ if [ -f "$P" ] && [ "$P" -nt "$T" ]; then
   exit 0
 fi
 
-if grep -qE '^\s*[-*] \[~\]' "$T"; then
+if grep -qE '^[[:space:]]*[-*] \[~\]' "$T"; then
   echo "STOP-GATE (COMPASS Rule 4): docs/TODO.md has [~] in-progress task(s) and no state save since. Either finish it, mark it [!] blocked with a one-line reason, or — to carry it to the next session on purpose — update docs/PROGRESS.md (run the /checkpoint flow) so the save is newer than the TODO edit. Honest saved state beats an optimistic goodbye." >&2
   exit 2
 fi
