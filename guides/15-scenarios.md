@@ -1,7 +1,7 @@
 # 15 — Scenarios by Scale: One System, Three Gears
 > 🇰🇷 같은 제품이 프로토타입 → MVP → 대규모로 성장하는 3막 실전 시나리오. 핵심 주장: 규모가 커져도 시스템은 교체되지 않는다 — 다이얼만 돌아간다.
 
-The product: **PulseBoard** — a public feedback-board service (users post/vote on feature requests). Act 1 validates the idea with a Firebase serverless prototype; Act 2 builds the paid MVP; Act 3 operates at 1M+-token scale. All three acts use the same five commands and the same eight files.
+The product: **PulseBoard** — a public feedback-board service (users post/vote on feature requests). Act 1 validates the idea with a Firebase serverless prototype; Act 2 builds the paid MVP; Act 3 operates at 1M+-token scale. All three acts use the same golden path (/setup once, then the five-command loop) and the same nine state files.
 
 ## 0. The scale dial
 
@@ -9,7 +9,7 @@ The product: **PulseBoard** — a public feedback-board service (users post/vote
 |---|---|---|---|
 | Goal | validate demand | prove paid value | grow & operate |
 | `/spec` depth | 1 round (no architecture-changing unknowns) | 2–3 rounds; the 90% gate genuinely blocks | per-feature SPECs, quarterly re-alignment |
-| State files in real use | PROJECT · TODO · PROGRESS | all eight; MAP is born; DECISIONS accumulate | all eight + map audits + drift ritual + `/improve` cadence |
+| State files in real use | PROJECT · TODO · PROGRESS | all nine; MAP is born; DECISIONS accumulate | all nine + map audits + drift ritual + `/improve` cadence |
 | Sessions | 1–2 total | one per phase | one per phase + strict `/clear` discipline |
 | Verification | smoke checks + rules tests | full gates + `/inspect` every task | + regression suite as long-term memory, CI |
 | Skipped (out loud) | full test pyramid, i18n, analytics → BACKLOG | premium features, admin comforts | nothing silently — everything becomes a decision |
@@ -74,7 +74,7 @@ Weekly-log excerpts — by now the system is invisible; only the rituals show:
 | W6 | Mobile begins | Per guide 13: Expo, monorepo `packages/shared` (Zod schemas shared with web), platform-true UI. New work = new feature-level `/spec`, same machine |
 | W8 | Map audit: 3-entry spot check → 2 stale → full `/map` pass | Map rot found by ritual, not by a lost afternoon |
 | W9 | Near-miss: auto-compact hits mid-task | SessionStart hook re-injects PROGRESS/TODO from disk; the compacted summary disagreed on one task status — **disk wins**, zombie avoided. This is checkpoint-before-compact earning its keep |
-| W12 | Inventory check | Still: 8 docs files, 11 commands, 5 hooks. Nothing was replaced since Act 1 — the same files simply carry more weight (guide 07's scaling table, lived) |
+| W12 | Inventory check | Still: 9 docs files, 14 commands, 5 hook scripts. Nothing was replaced since Act 1 — the same files simply carry more weight (guide 07's scaling table, lived) |
 
 **What defines this scale**: ritual compliance *is* survival — drift checks at boundaries, audits on cadence, `/improve` as a habit, and the test suite as the only memory that never compacts.
 

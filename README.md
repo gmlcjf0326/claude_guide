@@ -35,6 +35,7 @@ For many repos, package as a Claude Code plugin — recipe in `guides/10-extensi
 ### Add to your project's `.gitignore`
 ```
 .claude/settings.local.json
+.claude/secrets.unlock
 .env*
 !.env.example
 ```
@@ -54,7 +55,7 @@ For many repos, package as a Claude Code plugin — recipe in `guides/10-extensi
 
 **New to driving this? `guides/14-daily-playbook.md`** has two fully annotated real sessions (22 prompts) showing exactly what to type when; **`guides/15-scenarios.md`** shows the same system across three scales — a weekend Firebase prototype, a paid MVP, and a months-long 1M+-token product. Next session: just open `claude` — your state auto-loads. `/restore` for the deep restore. When lost, `CLAUDE.md`'s routing table tells you which command fits.
 
-> 🇰🇷 다섯 커맨드가 황금 경로입니다. 새 세션에서는 그냥 시작하세요 — 훅이 진행상황을 자동 주입합니다.
+> 🇰🇷 /setup 1회 + 다섯 커맨드 루프가 황금 경로입니다. 새 세션에서는 그냥 시작하세요 — 훅이 진행상황을 자동 주입합니다.
 
 ---
 
@@ -103,14 +104,14 @@ Already running "Opus advisor + Sonnet worker, max effort, plan mode, bypass per
 
 | Path | What it is |
 |---|---|
-| `CLAUDE.md` | The constitution (~100 lines): state machine, 12 rules, routing table |
-| `.claude/settings.json` | Secrets deny-list, `opusplan` model, hook wiring |
+| `CLAUDE.md` | The constitution (~95 lines): state machine, 12 rules, routing table |
+| `.claude/settings.json` | Secrets deny-list, hook wiring, statusline |
 | `.claude/hooks/` | **The law + the co-pilot**: guard-secrets · post-edit (auto-format + bloat budget + checkpoint counter) · session-resume (state injection + situation-aware suggestions) · stop-gate · statusline |
 | `.claude/agents/` | `architect` (Opus advisor, read-only) · `code-reviewer` (Sonnet) · `explorer` (Haiku scout) |
 | `.claude/commands/` | `/setup` `/spec` `/blueprint` `/next` `/inspect` `/checkpoint` `/restore` `/map` `/improve` `/advise` `/healthcheck` `/remember` `/research` `/secrets` |
 | `.claude/skills/` | requirement-interview · tradeoff-analysis · codebase-map · bloat-guard · long-horizon · definition-of-done · **research** |
 | `.claude/rules/` | **project-directives (always-on 영구 지침)** + path-scoped stack conventions: TypeScript · Rust/Tauri · Python · Java · Supabase/Firebase · PostgreSQL · AI/LLM · Docker · UI/Design |
-| `docs/` | **Durable state** (pre-seeded): **PROJECT (charter)** · SPEC · PLAN · TODO · PROGRESS · CODEBASE_MAP · DECISIONS · SESSION_LOG · BACKLOG · **inputs/ (참고 자료 투입구)** |
+| `docs/` | **Durable state** (pre-seeded): **PROJECT (charter)** · SPEC · PLAN · TODO · PROGRESS · CODEBASE_MAP · DECISIONS · SESSION_LOG · BACKLOG · **inputs/ (참고 자료 투입구)** · **research/ (조사 보관소)** |
 | `guides/00–16` | Deep rationale, read on demand — incl. **07 Long-Horizon (1M+ tokens)**, **08 Docker**, **12 Design Systems (Astryx)**, **13 Mobile Apps & Monetization**, **14 Daily Playbook (실전 운전법)**, **15 Scenarios by Scale (규모별 3막 시나리오)**, **16 Public-Sector Design (KRDS)** |
 | `templates/` | Pristine copies of every docs file + Docker templates + **CI workflow** + **design/ (KRDS 토큰·컴포넌트·데모)** + `.mcp.json.example` |
 
@@ -185,7 +186,7 @@ COMPASS ships everything, but a given project *activates* only its slice — and
 
 | Layer | What actually loads |
 |---|---|
-| Always | CLAUDE.md (~85 lines) + PROJECT identity + PROGRESS/TODO tails (hook) |
+| Always | CLAUDE.md (~95 lines) + PROJECT identity + PROGRESS/TODO tails (hook) |
 | On touching `*.ts` / `supabase/` / `*.sql` / `*.tsx` | typescript · serverless · postgres · design rules |
 | Never (this project) | java.md, python.md … (~0 tokens idle — path-scoped) |
 | On demand | skills when the task matches; guides only when read |
@@ -211,7 +212,7 @@ COMPASS names deliberately dodge Claude Code built-ins. Verified collisions we r
 | resume | **/restore** — 디스크에서 심층 복원 |
 | doctor | **/healthcheck** — 설치 자가진단 (섀도 감지 포함) |
 
-Rule when adding your own commands: type `/` first and check the live list — built-ins win ambiguity, and the list grows monthly. `/healthcheck` step 0 re-verifies all 13 names every time you run it. Note: Anthropic has unified custom commands into skills; `.claude/commands/` remains fully supported, and any COMPASS command can be migrated to `.claude/skills/<name>/SKILL.md` unchanged if you prefer that format later.
+Rule when adding your own commands: type `/` first and check the live list — built-ins win ambiguity, and the list grows monthly. `/healthcheck` step 0 re-verifies all 14 names every time you run it. Note: Anthropic has unified custom commands into skills; `.claude/commands/` remains fully supported, and any COMPASS command can be migrated to `.claude/skills/<name>/SKILL.md` unchanged if you prefer that format later.
 
 > 🇰🇷 요약: 내장과 겹치던 4개를 개명했고, /healthcheck가 앞으로 생길 충돌까지 자동 감지한다.
 
@@ -244,10 +245,10 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 
 **Q. 훅이 너무 엄격하면?** `.claude/settings.json`에서 개별 훅 블록을 제거하면 해당 강제만 꺼집니다(문서 규칙은 유지됨). 비대화 임계값은 `post-edit.sh`의 300/500 숫자를 수정하세요.
 
-**Q. 토큰 비용은?** CLAUDE.md ~100줄이 상시 로드의 전부입니다. rules는 해당 파일을 만질 때만, skills는 발동 시에만 로드됩니다. 서브에이전트는 별도 컨텍스트라 본대를 오염시키지 않습니다.
+**Q. 토큰 비용은?** 상시 로드는 CLAUDE.md ~95줄 + 영구지침 + 세션 훅이 주입하는 상태 요약이 전부입니다. rules는 해당 파일을 만질 때만, skills는 발동 시에만 로드됩니다. 서브에이전트는 별도 컨텍스트라 본대를 오염시키지 않습니다.
 
 **Q. 커스터마이즈해도 되나요?** 그러라고 만든 시스템입니다 — `guides/11-continuous-improvement.md`의 승격 사다리를 따라 여러분의 실수 패턴을 규칙과 훅으로 승격시키세요. 지켜야 할 불변식은 넷뿐: lean CLAUDE.md · disk-is-truth · hooks-for-must-haves · curated map.
 
 ---
 
-MIT License · COMPASS v1.14.0 · Built for solo developers running Sonnet-as-builder + Opus-as-advisor.
+MIT License · COMPASS v1.14.1 · Built for solo developers running Sonnet-as-builder + Opus-as-advisor.

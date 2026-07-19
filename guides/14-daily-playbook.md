@@ -68,7 +68,7 @@ Existing project (문서 검색 SaaS, /setup 완료 상태). Today's goal: CSV e
 | 8 | `/checkpoint 하고 /compact` | 컨텍스트 60% 부근 — 체크포인트 먼저, 압축은 그 다음 (순서가 생명) |
 | 9 | *(계속 작업하거나)* `/checkpoint` | 마무리 |
 
-**Count**: 22 prompts across two days. Commands: 7. Everything else: plain, short, human.
+**Count**: 22 prompts across two days. Commands: 10. Everything else: plain, short, human.
 
 ## 6. Where YOUR attention actually matters (the 3 leverage points)
 

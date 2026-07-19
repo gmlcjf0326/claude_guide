@@ -37,15 +37,15 @@ Research on repository context files found LLM-generated structural overviews *r
 ```
 CLAUDE.md                 ← constitution: state machine + 12 rules + routing
 .claude/
-  settings.json           ← permissions deny-list, model, hook wiring
+  settings.json           ← permissions deny-list, hook wiring, statusline
   hooks/                  ← LAW+CO-PILOT: guard-secrets · post-edit(format+bloat+ckpt counter) · session-resume(state+suggestions) · stop-gate · statusline
-  rules/                  ← stack conventions, path-scoped (TS, Rust/Tauri, Python, Java, serverless, Postgres, AI, Docker, Design)
-  agents/                 ← architect(Opus) · code-reviewer(Sonnet) · explorer(Haiku)
-  commands/               ← /spec /blueprint /next /inspect /checkpoint /restore /map /improve /advise
+  rules/                  ← stack conventions, path-scoped (TS, Rust/Tauri, Python, Java, serverless, Postgres, AI, Docker, Design) + project-directives (always-on)
+  agents/                 ← architect(advisor) · code-reviewer(Sonnet) · explorer(Haiku)
+  commands/               ← 14: /setup /spec /blueprint /next /inspect /checkpoint + /restore /map /advise /remember /improve /research /secrets /healthcheck
   skills/                 ← requirement-interview · tradeoff-analysis · codebase-map · bloat-guard · long-horizon · definition-of-done · research
-docs/                     ← DURABLE STATE: SPEC PLAN TODO PROGRESS CODEBASE_MAP DECISIONS SESSION_LOG BACKLOG
+docs/                     ← DURABLE STATE: PROJECT SPEC PLAN TODO PROGRESS CODEBASE_MAP DECISIONS SESSION_LOG BACKLOG + inputs/ + research/
 guides/                   ← this folder (00–16): deep rationale, read on demand
-templates/                ← pristine copies of every docs/ file + Docker templates
+templates/                ← pristine copies of every docs/ file + Docker + CI + design(KRDS) + .mcp.json.example
 ```
 
 ## The golden path
@@ -57,8 +57,8 @@ templates/                ← pristine copies of every docs/ file + Docker templ
 /inspect                 → independent reviewer PASS required
 /checkpoint             → save-game: docs updated + commit
 ```
-Next session: just start — the SessionStart hook auto-injects your state; `/restore` for the deep version.
-> 🇰🇷 이 다섯 커맨드가 황금 경로다. 나머지(/map /improve /advise)는 필요할 때 꺼내 쓰는 전문 도구.
+First session in a project: run `/setup` once before this loop — it profiles the project into `docs/PROJECT.md`. Next session: just start — the SessionStart hook auto-injects your state; `/restore` for the deep version.
+> 🇰🇷 /setup 1회 + 이 다섯 커맨드 루프가 황금 경로다. 나머지(/restore /map /advise /remember /improve /research /secrets /healthcheck)는 필요할 때 꺼내 쓰는 전문 도구.
 
 ## Requirement → mechanism map (why each piece exists)
 

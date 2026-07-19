@@ -14,7 +14,7 @@ The conclusion is structural, not motivational: **long-horizon capability cannot
 
 ## 2. The five pillars
 
-**P1 — Durable state.** Eight files in `docs/` carry everything a stranger needs: SPEC (why/what) · PLAN (how) · TODO (exactly where we are) · PROGRESS (dashboard) · CODEBASE_MAP (where things live) · DECISIONS (why things are the way they are) · SESSION_LOG (history) · BACKLOG (deferred). Together they answer the five questions any resumed session asks: *What are we building? How? Where are we? Why is it like this? What's next?*
+**P1 — Durable state.** Nine files in `docs/` carry everything a stranger needs: PROJECT (who/what for — the charter, auto-injected every session) · SPEC (why/what) · PLAN (how) · TODO (exactly where we are) · PROGRESS (dashboard) · CODEBASE_MAP (where things live) · DECISIONS (why things are the way they are) · SESSION_LOG (history) · BACKLOG (deferred). Together they answer the five questions any resumed session asks: *What are we building? How? Where are we? Why is it like this? What's next?*
 
 **P2 — Checkpoints.** A checkpoint (= `/checkpoint`) is a synchronization barrier: disk state made honest + git commit. The invariant it maintains: *at any moment, losing the entire context costs at most the work since the last checkpoint.* Checkpoint at: task completion, phase end, session end, and ALWAYS immediately before `/compact` or `/clear`.
 
@@ -71,7 +71,7 @@ The discipline point: never let "the spec is old anyway" become ambient truth. E
 | ~500K (subsystem) | many | Phase-per-session; drift ritual; DECISIONS accumulating; /improve at milestones |
 | **~1M+ (product)** | dozens | Everything above **plus**: map audits on a cadence, SESSION_LOG as the project's institutional memory, test suite treated as load-bearing memory, periodic `/improve` promoting recurring fixes into rules/hooks (guide 11) |
 
-The pleasant surprise of this architecture: nothing is *replaced* as you scale — the same eight files and five commands simply carry more weight. There is no "now migrate to the serious system" cliff.
+The pleasant surprise of this architecture: nothing is *replaced* as you scale — the same nine files and the same golden path simply carry more weight. There is no "now migrate to the serious system" cliff.
 
 ## 7. Failure modes → recovery
 

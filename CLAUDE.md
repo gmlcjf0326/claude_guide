@@ -38,7 +38,7 @@ Exploratory spikes: timebox it, prefix the TODO item with `[spike]`, throw the c
 5. **Bloat budget:** file ≤ 300 lines (soft) / 500 (hard); function ≤ 50 lines; one feature per module. On breach, split before adding more (skill: `bloat-guard`). A hook will warn you; do not ignore it.
 6. **Map contract:** whenever structure changes (file/module added, moved, removed, or repurposed), update `docs/CODEBASE_MAP.md` in the same commit.
 7. **Nothing is done until verified.** Run lint, typecheck, and tests; review your own diff against the plan before claiming completion. Show proof (test output), not promises.
-8. **Consult the `architect` subagent (Opus)** before irreversible or cross-cutting decisions: data schema, public API shape, framework/library choice, auth & security model, large refactors.
+8. **Consult the `architect` subagent** before irreversible or cross-cutting decisions: data schema, public API shape, framework/library choice, auth & security model, large refactors.
 9. **Simplicity first.** The simplest design that satisfies `docs/SPEC.md` wins. No speculative abstraction, no unrequested features — park ideas in `docs/BACKLOG.md` instead.
 10. **Small, safe steps.** Small conventional commits (`feat:`, `fix:`, `refactor:` …). Never leave the main branch broken. Prefer reversible moves.
 11. **Secrets are locked by default.** Never read, write, print, or commit `.env` files, keys, or tokens (hook-enforced). Exception — **test unlock**: when the user explicitly pastes keys for testing, run `/secrets on` (gitignore-guarded, session-visible), write them into `.env`, confirm by key NAME only — values are never echoed back, env files never committed, and `.pem`/`.key`/certificates stay permanently locked in every mode.
