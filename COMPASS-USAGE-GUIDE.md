@@ -1,4 +1,4 @@
-# COMPASS 사용설명서 (v1.15.0 · 완전판 한 장 요약)
+# COMPASS 사용설명서 (v1.16.0 · 완전판 한 장 요약)
 > 이 문서 하나로 시스템 전체의 사용법을 커버합니다. 작업하며 옆에 펴놓는 매뉴얼.
 > 온보딩은 `START_HERE.md`, 세부 근거는 `guides/00–16`, 이 문서는 "어떻게 쓰는가"의 전부. · English version: `COMPASS-USAGE-GUIDE.en.md`
 
@@ -22,6 +22,7 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 - ⚠️ **함정 1**: `.claude`는 숨김폴더 — 탐색기 드래그 복사에서 빠지면 시스템 절반이 조용히 죽음. 위 명령으로 복사.
 - ⚠️ **함정 2 (업그레이드 시)**: 새 버전을 통째로 덮어쓰지 말 것. **보존**: `docs/` 전체 + `.claude/rules/project-directives.md` (당신의 데이터). **교체**: 나머지 전부.
 - `.gitignore`: `.claude/settings.local.json` / `.claude/secrets.unlock` / `.env*` / `!.env.example`
+- 플러그인 설치 대안: `/plugin marketplace add <owner>/<repo>` → `/plugin install compass@compass` → 프로젝트에서 `/compass:init` (두 함정이 자동 회피됨 — README Mode C).
 - Opus는 옵트인: 기본 배포는 모델 미지정이라 어떤 플랜에서도 그대로 동작. Opus가 있으면 `/setup`(3c)이 물어보고 `settings.local.json`(opusplan) + `architect.md`·`setup.md`·`spec.md`·`blueprint.md`의 model 핀을 켜 준다.
 
 ---

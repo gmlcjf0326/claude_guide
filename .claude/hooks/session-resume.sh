@@ -8,7 +8,7 @@ ROOT="${CLAUDE_PROJECT_DIR:-.}"
 D="$ROOT/docs"
 if [ ! -d "$D" ]; then
   # Never degrade silently: no docs/ means a partial install or a fresh project.
-  echo "=== COMPASS: docs/ not found. If COMPASS was just installed, the docs/ folder may not have been copied (see START_HERE §4 install trap) — restore it, or run /setup to begin. ==="
+  echo "=== COMPASS: docs/ not found. If COMPASS was just installed, the docs/ folder may not have been copied (see START_HERE §4 install trap) — restore it, run /compass:init (plugin install), or run /setup to begin. ==="
   exit 0
 fi
 

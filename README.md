@@ -30,8 +30,14 @@ Start `claude` in the project. Done — the SessionStart hook will greet you wit
 ### Mode B — pieces globally
 `CLAUDE.md`(내용을 `~/.claude/CLAUDE.md`에 병합), `.claude/agents/`, `.claude/commands/`, `.claude/skills/`는 `~/.claude/` 아래에 두면 모든 프로젝트에 적용됩니다. 단, hooks/settings와 `docs/` 상태 파일은 프로젝트별 설치를 권장합니다 (경로 스코프 rules는 사용자 레벨에서 동작이 불안정한 버전이 있음 — 아래 Compatibility 참조).
 
-### Mode C — as a plugin
-For many repos, package as a Claude Code plugin — recipe in `guides/10-extensibility.md`.
+### Mode C — as a plugin (this repo is a marketplace)
+```
+/plugin marketplace add gmlcjf0326/claude_guide
+/plugin install compass@compass
+/compass:init          ← run inside your project, then restart claude
+```
+`/compass:init` installs the full project layer (and safely upgrades later — docs/ and your directives are never overwritten). Rationale and details: `guides/10-extensibility.md`.
+> 🇰🇷 방법 C: 플러그인 설치 후 프로젝트 안에서 `/compass:init` 한 번 — zip 복사의 두 함정이 구조적으로 사라집니다. 업그레이드는 `/plugin update compass` → `/compass:init`.
 
 ### Add to your project's `.gitignore`
 ```
@@ -252,4 +258,4 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 
 ---
 
-MIT License · COMPASS v1.15.0 · Optimized for solo developers (teams: see the append-style SESSION_LOG and clean-tree stop-gate notes) running Sonnet-as-builder + Opus-as-advisor.
+MIT License · COMPASS v1.16.0 · Optimized for solo developers (teams: see the append-style SESSION_LOG and clean-tree stop-gate notes) running Sonnet-as-builder + Opus-as-advisor.

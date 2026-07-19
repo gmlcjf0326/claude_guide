@@ -1,0 +1,11 @@
+{
+  "name": "compass",
+  "displayName": "COMPASS",
+  "version": "1.16.0",
+  "description": "Installer/updater for COMPASS — the agentic engineering operating system for Claude Code. Run /compass:init inside a project to install it, or to safely upgrade an existing install (docs/ and your permanent directives are always preserved).",
+  "author": { "name": "COMPASS contributors" },
+  "repository": "https://github.com/gmlcjf0326/claude_guide",
+  "license": "MIT",
+  "keywords": ["workflow", "process", "long-horizon", "checkpoint", "spec-first"],
+  "commands": "./plugin/commands/"
+}

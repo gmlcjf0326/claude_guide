@@ -1,4 +1,4 @@
-# COMPASS User Manual (v1.15.0 · the complete one-page summary)
+# COMPASS User Manual (v1.16.0 · the complete one-page summary)
 > This one document covers how to use the entire system — the manual you keep open while working.
 > Onboarding: `START_HERE.en.md` · deep rationale: `guides/00–16` · this file is all of the "how". 한국어판: `COMPASS-USAGE-GUIDE.md`
 
@@ -22,6 +22,7 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 - ⚠️ **Trap 1**: `.claude` is hidden — drag-copy skips it and half the system silently dies. Use the command above.
 - ⚠️ **Trap 2 (upgrades)**: never overwrite wholesale. **Keep**: all of `docs/` + `.claude/rules/project-directives.md` (your data). **Replace**: everything else.
 - `.gitignore`: `.claude/settings.local.json` / `.claude/secrets.unlock` / `.env*` / `!.env.example`
+- Plugin-install alternative: `/plugin marketplace add <owner>/<repo>` → `/plugin install compass@compass` → `/compass:init` in your project (both traps auto-avoided — README Mode C).
 - Opus is opt-in: the default ships model-neutral and runs on any plan. If you have Opus, `/setup` (3c) asks and enables `settings.local.json` (opusplan) + the model pins on `architect.md`·`setup.md`·`spec.md`·`blueprint.md`.
 
 ---

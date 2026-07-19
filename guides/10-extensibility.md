@@ -40,5 +40,13 @@ Project-shared config lives in `.mcp.json` (an example ships as `templates/.mcp.
 
 ## Packaging COMPASS as a plugin (optional)
 
-For one-command installs across many repos: create `.claude-plugin/plugin.json` (`{"name":"compass","version":"1.0.0"}`), move `commands/`, `agents/`, `skills/`, `hooks/` to the plugin root per the plugin spec, add a `marketplace.json`, push to a git repo, then `/plugin marketplace add you/compass` + `/plugin install compass`. For a solo dev the copy-into-project install this zip uses is simpler and versions *with each project* — package as a plugin only when repo count makes copying annoying.
-> 🇰🇷 저장소가 5개를 넘어 복사가 귀찮아질 때 플러그인화하라. 그 전엔 프로젝트 동봉이 더 단순하다.
+**This repo IS a marketplace** — `.claude-plugin/marketplace.json` + `plugin.json` ship at the root. The plugin is deliberately an *installer*, not the runtime: plugins cannot carry CLAUDE.md, `.claude/rules/`, permissions, or the statusline, and plugin commands are always namespaced (`/compass:spec`, not `/spec`) — so COMPASS runs project-level, and the plugin's single command `/compass:init` installs or safely upgrades that project layer (docs/ and project-directives.md always preserved; both install traps eliminated). Install flow:
+
+```
+/plugin marketplace add <owner>/<this-repo>
+/plugin install compass@compass
+/compass:init          ← inside your project; restart claude afterwards
+```
+
+Upgrades: `/plugin update compass` → `/compass:init` again. The copy-the-zip install (Mode A) remains fully supported and versions *with each project*.
+> 🇰🇷 이 저장소 자체가 마켓플레이스다. 플러그인은 런타임이 아니라 '설치기' — /compass:init 한 번이면 zip 복사의 두 함정(숨김폴더 누락·업그레이드 덮어쓰기)이 사라진다.
