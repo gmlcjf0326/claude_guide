@@ -1,14 +1,18 @@
 ---
 paths:
   - "supabase/**"
-  - "**/functions/**"
+  - "**/supabase/**"
+  - "functions/**"
   - "**/firestore.rules"
+  - "**/storage.rules"
+  - "**/database.rules.json"
   - "**/firebase.json"
-  - "**/*.sql"
+  - "**/.firebaserc"
 ---
 
 # Serverless Rules — Supabase & Firebase
 > 🇰🇷 Supabase/Firebase 작업 시 자동 적용. 여기의 RLS 체크리스트는 생략 불가.
+> Applies to Supabase/Firebase projects ONLY. The RLS litany is Supabase-specific — in other stacks, `.sql` files follow postgres.md (or your engine's semantics), and a folder merely named `functions/` does not make a project serverless.
 
 ## Supabase — the RLS litany (each line prevents a real production incident)
 1. `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` **in the same migration** as `CREATE TABLE` — a table without RLS is publicly writable through the anon key.

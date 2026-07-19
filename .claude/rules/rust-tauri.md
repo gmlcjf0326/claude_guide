@@ -2,10 +2,13 @@
 paths:
   - "**/*.rs"
   - "src-tauri/**"
+  - "**/src-tauri/**"
 ---
 
 # Rust / Tauri Rules
 > 🇰🇷 Rust 및 Tauri 데스크톱 작업 시 자동 적용.
+> Tauri sections apply only when the project actually uses Tauri (a `src-tauri/` directory exists). Plain Rust CLIs/servers/libraries: follow §Code health and the error rules; skip the Tauri command/IPC/capability sections.
+> Defaults for NEW code. In an existing repository, the repo's established tooling and conventions win — record the deviation once in `.claude/rules/project-directives.md` instead of fighting the codebase.
 
 ## Tauri commands — the checklist that prevents the classic silent failure
 1. `#[tauri::command]` functions stay THIN: parse args → call a service function → map the result. Logic lives in `features/<name>/service.rs`, not in the command.

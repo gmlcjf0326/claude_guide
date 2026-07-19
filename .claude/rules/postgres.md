@@ -9,6 +9,7 @@ paths:
 
 # PostgreSQL Rules
 > 🇰🇷 Postgres 스키마/쿼리/마이그레이션 작업 시 자동 적용. (Supabase도 Postgres — supabase/ 경로에서는 serverless.md의 RLS 체크리스트가 함께 적용된다.)
+> Applies only when this project's database IS PostgreSQL (check docs/PROJECT.md or the driver in use). These paths also match Prisma/Drizzle/migrations on other engines — for MySQL/SQLite/SQL Server, skip the Postgres-specific mandates (`timestamptz`, `CREATE INDEX CONCURRENTLY`, `GENERATED ALWAYS AS IDENTITY`, pgbouncer/Supavisor) and follow that engine's semantics.
 
 ## Schema — types & constraints are the last line of defense
 - `text` over `varchar(n)` unless a real business limit exists; `timestamptz` ALWAYS (`timestamp` without zone is a latent bug); `numeric` for money — never `float`; `bigint GENERATED ALWAYS AS IDENTITY` for PKs (UUIDv7 acceptable when IDs must be client-generated or unguessable).

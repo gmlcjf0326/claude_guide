@@ -1,10 +1,14 @@
 ---
 paths:
-  - "**/*.{ts,tsx,mts,cts}"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.mts"
+  - "**/*.cts"
 ---
 
 # TypeScript / Node Rules
 > 🇰🇷 TS/Node 작업 시 자동 적용되는 컨벤션.
+> Defaults for NEW code. In an existing repository, the repo's established tooling and conventions win — record the deviation once in `.claude/rules/project-directives.md` instead of fighting the codebase.
 
 ## Compiler is the first reviewer
 `tsconfig.json` must include — never weaken these to silence an error; fix the code:

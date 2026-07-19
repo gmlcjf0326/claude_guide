@@ -4,7 +4,6 @@ paths:
   - "**/llm/**"
   - "**/prompts/**"
   - "**/*prompt*"
-  - "**/*llm*"
 ---
 
 # AI / LLM Integration Rules

@@ -4,6 +4,7 @@ paths:
   - "**/docker-compose*.y*ml"
   - "**/compose*.y*ml"
   - ".devcontainer/**"
+  - "**/.devcontainer/**"
   - "**/.dockerignore"
 ---
 
