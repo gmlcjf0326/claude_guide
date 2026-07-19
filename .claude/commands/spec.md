@@ -1,7 +1,6 @@
 ---
 description: Clarify-first requirement interview — never write code here; output is docs/SPEC.md
 argument-hint: [feature or problem description]
-model: opus
 ---
 
 ultrathink. Load the `requirement-interview` skill and follow it exactly for this request: $ARGUMENTS

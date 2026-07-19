@@ -91,8 +91,8 @@ Already running "Opus advisor + Sonnet worker, max effort, plan mode, bypass per
 
 | Your manual habit | COMPASS equivalent | What changes |
 |---|---|---|
-| Set Opus advisor + Sonnet worker by hand | `opusplan` in settings + `architect` subagent + `model: opus` on `/spec` `/blueprint` | Nothing to do — automatic on install |
-| `/effort max` | Keep it; `ultrathink` is additionally baked into `/spec` `/blueprint` `/improve` | Unchanged |
+| Set Opus advisor + Sonnet worker by hand | `/setup` asks once (step 3c) and enables `opusplan` in `.claude/settings.local.json` + `model: opus` pins on `architect` / `/setup` `/spec` `/blueprint` | One interview answer — no hand-editing |
+| `/effort max` | Keep it; `ultrathink` is additionally baked into `/setup` `/spec` `/blueprint` `/improve` | Unchanged |
 | Declare the goal in plan mode | `/setup` (once per project) → `/spec` (per feature) → `/blueprint` | The plan lands on **disk** (PLAN.md/TODO.md), not in volatile context |
 | `--dangerously-skip-permissions` on the host | Same flag, **inside the devcontainer** (`templates/docker/devcontainer.json`); `acceptEdits` on the host | Hooks (secrets-block, bloat, stop-gate) still run even in bypass mode — but the container wall is the real safety |
 | Near the window limit: "save to memory" → `/compact` | At **~60%**: `/checkpoint` → `/compact` (focused); at a phase boundary: `/checkpoint` → `/clear` | Ad-hoc saving becomes a protocol; state auto-reinjects via the SessionStart hook. Directives go to `/remember`, state goes to `/checkpoint` — two tools, not one vague ask |
@@ -224,13 +224,13 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 
 - **Claude Code v2.x+** (uses hooks, skills, `.claude/rules` with `paths:` frontmatter, subagent `model:` routing).
 - **bash** for hooks (macOS/Linux native; **Windows → WSL or Git Bash**). `jq` recommended but optional — every hook has a grep fallback and degrades gracefully.
-- **Opus access** for the advisor seats. Without it: remove `"model": "opusplan"` from `.claude/settings.json` and the `model: opus` lines in `spec.md`/`plan.md`/`architect.md` — everything else works unchanged on Sonnet.
+- **Opus access is optional and opt-in.** The package ships model-neutral (no `model` pins), so it runs unmodified on any plan. `/setup` step 3c asks once; answering YES enables `opusplan` via `.claude/settings.local.json` and pins `model: opus` in `agents/architect.md` and the `setup`/`spec`/`blueprint` command frontmatter. To enable or disable by hand, those are the complete locations — verify with `grep -rn "model" .claude/`.
 - Claude Code evolves weekly. If something seems ignored:
-  - `/hooks` — verify the four hooks registered
+  - `/hooks` — verify the four hook events registered (the statusline is wired separately via `statusLine` and won't appear there)
   - `/memory` — verify CLAUDE.md and rules loaded; **if a path-scoped rule never loads on your version, remove its `paths:` block** (it will then load unconditionally — acceptable, files are lean) — some versions had scoping quirks, especially for user-level rules
   - `claude --version` and the official docs are the final authority
 
-> 🇰🇷 훅은 bash 기반입니다(Windows는 WSL/Git Bash). jq 없어도 동작합니다. Opus 미보유 시 위의 세 군데에서 model 지정만 지우면 전부 Sonnet으로 동작합니다.
+> 🇰🇷 훅은 bash 기반입니다(Windows는 WSL/Git Bash). jq 없어도 동작합니다. Opus는 선택 사항입니다 — 기본 배포는 모델 미지정이라 어떤 플랜에서도 그대로 동작하고, Opus가 있으면 `/setup`이 한 번 물어보고 켜 줍니다.
 
 ## Design honesty — read once
 

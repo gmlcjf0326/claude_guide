@@ -59,13 +59,15 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 
 이게 보이면 성공입니다. 안 보이면 §7의 문제해결로.
 
-## 6. Opus가 없는 플랜(Pro 등)이라면 — 3곳만 수정
+## 6. Opus 모델 — 있으면 켜고, 없으면 그냥 쓰세요
 
-1. `.claude/settings.json`에서 `"model": "opusplan",` 줄 삭제
-2. `.claude/commands/spec.md` 와 `blueprint.md` 의 `model: opus` 줄 삭제
-3. `.claude/agents/architect.md` 의 `model: opus` → `model: sonnet` 으로 변경
+기본 배포는 **모델 미지정**이라 Pro 등 어떤 플랜에서도 수정 없이 그대로 동작합니다. Opus가 있는 플랜이라면 `/setup`이 한 번 물어보고(3c 단계) 다음을 켜 줍니다:
 
-나머지 전부는 Sonnet만으로 동일하게 동작합니다.
+1. `templates/settings.local.json.example` → `.claude/settings.local.json` 복사 (`opusplan`: 계획은 Opus, 실행은 Sonnet)
+2. `.claude/agents/architect.md` 의 `model: inherit` → `model: opus`
+3. (선택) `.claude/commands/setup.md`·`spec.md`·`blueprint.md` frontmatter에 `model: opus` 추가
+
+수동으로 켜고 끌 때도 위 목록이 전부입니다 — `grep -rn "model" .claude/` 로 확인할 수 있습니다.
 
 ## 7. 30분 연습 미션 — 몸으로 익히기 (강력 추천)
 

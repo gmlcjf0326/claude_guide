@@ -1,7 +1,6 @@
 ---
 description: Turn the SPEC into compared options, an approved plan, and a phased TODO checklist
 argument-hint: [scope, or leave empty for the whole SPEC]
-model: opus
 ---
 
 ultrathink. Read `docs/SPEC.md` first. If it does not exist or is stale, stop and tell the user to run `/spec`.
