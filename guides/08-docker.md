@@ -68,12 +68,14 @@ Why it's shaped this way: lockfile-only layer caches dependency installs across 
 ```dockerfile
 # syntax=docker/dockerfile:1
 FROM python:3.12-slim AS base
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv   # uv without pip bootstrap
+COPY --from=ghcr.io/astral-sh/uv:0.7 /uv /usr/local/bin/uv   # pinned (law #2: no :latest); bump deliberately
 WORKDIR /app
 
 FROM base AS deps
 COPY pyproject.toml uv.lock ./
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+# --no-install-project: this stage has no source yet — install deps only
+# (without it, uv tries to build the project itself and the stage fails)
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-install-project --no-dev
 
 FROM base AS runtime
 COPY --from=deps /app/.venv /app/.venv
@@ -90,7 +92,7 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ```dockerfile
 # syntax=docker/dockerfile:1
-FROM rust:1.79-slim AS chef
+FROM rust:1.88-slim AS chef      # keep in sync with rust-toolchain.toml / your MSRV
 RUN cargo install cargo-chef
 WORKDIR /app
 
@@ -124,7 +126,9 @@ services:
     volumes:
       - .:/app                              # hot reload: source mounted
       - /app/node_modules                   # …but container's node_modules masked from host
-    env_file: .env                          # gitignored; never baked into images
+    env_file:
+      - path: .env                          # gitignored; never baked into images
+        required: false                     # fresh clones have no .env — don't fail startup
     ports: ["3000:3000"]
     depends_on:
       db: { condition: service_healthy }    # start AFTER the db actually answers

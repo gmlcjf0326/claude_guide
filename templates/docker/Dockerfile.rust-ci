@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # COMPASS Rust service/CI image with cargo-chef dependency caching — see guides/08-docker.md
 # 🇰🇷 Rust 서비스/CI용 cargo-chef 캐싱 템플릿. (Tauri 데스크톱 앱 자체는 도커로 배포하지 않음 — CI 빌드에만 사용)
-FROM rust:1.79-slim AS chef
+FROM rust:1.88-slim AS chef   # keep in sync with rust-toolchain.toml / your crates' MSRV
 RUN cargo install cargo-chef
 WORKDIR /app
 

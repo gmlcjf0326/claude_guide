@@ -9,7 +9,9 @@ services:
     volumes:
       - .:/app                # hot reload
       - /app/node_modules     # mask host node_modules with container's
-    env_file: .env            # gitignored — never bake into images
+    env_file:
+      - path: .env            # gitignored — never bake into images
+        required: false       # fresh clones have no .env yet — don't fail startup
     ports:
       - "3000:3000"
     depends_on:
