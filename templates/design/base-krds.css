@@ -1,0 +1,43 @@
+/* COMPASS · KRDS base — 리셋 + 요소 기본값. tokens-krds.css 다음에 로드. */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+
+  html { font-size: 100%; }
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--leading);
+    letter-spacing: 0;               /* KRDS: 국문 인위적 자간 금지 */
+    word-break: keep-all;            /* 국문 어절 단위 줄바꿈 */
+    overflow-wrap: anywhere;         /* 긴 URL 넘침 방지 */
+    color: var(--color-text-body);
+    background: var(--color-surface);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { font-weight: var(--weight-bold); line-height: var(--leading); }
+  h1 { font-size: var(--text-h1); }
+  h2 { font-size: var(--text-h2); }
+  h3 { font-size: var(--text-h3); }
+  h4 { font-size: var(--text-lg); }
+
+  p + p { margin-top: var(--space-4); }
+  .prose { max-width: 46rem; }       /* 국문 40~50자/행 가독 한계 */
+
+  a { color: var(--color-link); text-underline-offset: 3px; }
+  a:hover { color: var(--color-action-active); }
+
+  :focus-visible {
+    outline: 2px solid transparent;  /* 고대비 모드 대비 */
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-control);
+  }
+
+  img, svg { display: block; max-width: 100%; }
+  button, input, select, textarea { font: inherit; letter-spacing: inherit; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}

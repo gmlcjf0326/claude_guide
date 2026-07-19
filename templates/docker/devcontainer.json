@@ -1,0 +1,10 @@
+{
+  "name": "compass-dev-sandbox",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" }
+  },
+  "postCreateCommand": "npm install -g @anthropic-ai/claude-code",
+  "remoteUser": "vscode",
+  "mounts": []
+}

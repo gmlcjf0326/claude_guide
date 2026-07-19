@@ -1,0 +1,21 @@
+# syntax=docker/dockerfile:1
+# COMPASS Python/uv production image — annotated rationale in guides/08-docker.md
+# 🇰🇷 Python/uv 프로덕션 멀티스테이지 템플릿.
+FROM python:3.12-slim AS base
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+WORKDIR /app
+
+FROM base AS deps
+COPY pyproject.toml uv.lock ./
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+
+FROM base AS runtime
+COPY --from=deps /app/.venv /app/.venv
+ENV PATH="/app/.venv/bin:$PATH"
+COPY . .
+RUN useradd -m app && chown -R app:app /app
+USER app
+EXPOSE 8000
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health').status==200 else 1)"
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

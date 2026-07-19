@@ -1,0 +1,113 @@
+/* ═══════════════════════════════════════════════════════════════════
+   COMPASS · KRDS-anchored design tokens (Korean public-sector default)
+   🇰🇷 대한민국 정부 디자인 시스템(KRDS) 기반 토큰. 모든 색상 쌍은 WCAG/KWCAG
+   대비율을 실측 검증함(주석의 수치). 이 파일이 유일한 진실 — 바닐라 CSS와
+   Tailwind가 같은 값을 소비한다. 인라인 스타일에 원시 hex 금지.
+
+   MAGIC NUMBER RULE (KRDS/USWDS): 두 토큰의 등급 차이가
+     ≥40 → 3:1 (대형 텍스트/UI)   ≥50 → 4.5:1 (본문)   ≥70 → 7:1 (AAA)
+   → 대비 검사기를 돌리기 전에 산수로 먼저 판단할 수 있다.
+
+   VERIFY BEFORE PRODUCTION: 50 이하 기본 단계는 공식 값으로 확증됨.
+   70/80/90 심층 단계는 커뮤니티 재구성 값 — 실서비스 전
+   github.com/KRDS-uiux/krds-uiux 의 tokens/ 또는 npm `krds-uiux`로 대조할 것.
+   ═══════════════════════════════════════════════════════════════════ */
+@layer reset, tokens, base, components, utilities, overrides;
+
+@layer tokens {
+  :root {
+    /* ── Primitive · Primary (Government Blue) ─────────────────── */
+    --krds-blue-5:  #ECF2FE;
+    --krds-blue-10: #D8E5FD;
+    --krds-blue-20: #B1CEFB;
+    --krds-blue-30: #86AFF9;
+    --krds-blue-40: #4C87F6;
+    --krds-blue-50: #256EF4;  /* base · on white 4.55:1 (AA) · white-on-it 4.55:1 */
+    --krds-blue-60: #0B50D0;  /* on white 6.83:1 — 링크/파란 본문용 */
+    --krds-blue-70: #083891;
+    --krds-blue-80: #052561;
+    --krds-blue-90: #03163A;
+
+    /* ── Primitive · Gray (blue-tinted neutral) ────────────────── */
+    --krds-gray-0:   #FFFFFF;
+    --krds-gray-5:   #F4F5F6;
+    --krds-gray-10:  #E6E8EA;
+    --krds-gray-20:  #CDD1D5;
+    --krds-gray-30:  #B1B8BE;
+    --krds-gray-40:  #8A949E;
+    --krds-gray-50:  #6D7882;  /* on white 4.51:1 — muted 텍스트 하한 */
+    --krds-gray-60:  #58616A;  /* on white 6.30:1 · 입력 테두리 3:1↑ */
+    --krds-gray-70:  #464C53;
+    --krds-gray-80:  #33363D;
+    --krds-gray-90:  #1E2124;  /* 본문 · on white 16.18:1 (AAA, 고대비 15:1↑) */
+    --krds-gray-95:  #131416;
+    --krds-gray-100: #000000;
+
+    /* ── Primitive · Secondary (Navy) ──────────────────────────── */
+    --krds-navy-5:  #EEF2F7;
+    --krds-navy-50: #346FB2;  /* white-on-it 5.17:1 */
+    --krds-navy-60: #1C589C;
+    --krds-navy-70: #063A74;
+
+    /* ── Primitive · System ────────────────────────────────────── */
+    --krds-danger-50:  #DE3412;  /* on white 4.56:1 · white-on-it 4.56:1 */
+    --krds-warning-50: #FFB114;  /* 배경 전용 — 텍스트로 쓰지 말 것 */
+    --krds-warning-70: #9E6A00;  /* warning "텍스트"는 이 색 · on white 4.65:1 */
+    --krds-success-50: #228738;  /* on white 4.57:1 · white-on-it 4.57:1 */
+    --krds-info-50:    #0B78CB;  /* on white 4.60:1 */
+    --krds-point-50:   #D63D4A;  /* 정부 적색 포인트 — 극소량만 */
+
+    /* ── Semantic (컴포넌트는 반드시 이 계층만 소비) ─────────────── */
+    --color-surface:        var(--krds-gray-0);
+    --color-surface-subtle: var(--krds-gray-5);
+    --color-text-body:      var(--krds-gray-90);
+    --color-text-muted:     var(--krds-gray-50);
+    --color-text-inverse:   var(--krds-gray-0);
+    --color-border:         var(--krds-gray-30);
+    --color-border-strong:  var(--krds-gray-60);
+    --color-action:         var(--krds-blue-50);
+    --color-action-hover:   var(--krds-blue-60);
+    --color-action-active:  var(--krds-blue-70);
+    --color-action-subtle:  var(--krds-blue-5);
+    --color-link:           var(--krds-blue-60);
+    --color-danger:         var(--krds-danger-50);
+    --color-success:        var(--krds-success-50);
+    --color-info:           var(--krds-info-50);
+    --color-warning-bg:     var(--krds-warning-50);
+    --color-warning-text:   var(--krds-warning-70);
+    --color-focus:          var(--krds-blue-50);
+
+    /* ── Typography (KRDS: 17px 본문 · 150% · 자간 0 · 400/700만) ── */
+    --font-sans: "Pretendard GOV Variable", "Pretendard Variable", Pretendard,
+      -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+      "Noto Sans KR", sans-serif;
+    --text-xs:   0.8125rem;  /* 13px */
+    --text-sm:   0.9375rem;  /* 15px */
+    --text-body: 1.0625rem;  /* 17px — KRDS 본문 기준 */
+    --text-lg:   1.1875rem;  /* 19px */
+    --text-h3:   1.5rem;     /* 24px */
+    --text-h2:   2rem;       /* 32px */
+    --text-h1:   2.5rem;     /* 40px */
+    --leading:   1.5;        /* 국문 최소 150% */
+    --weight-regular: 400;
+    --weight-bold:    700;
+
+    /* ── Spacing (8pt grid) · Radius · Focus ───────────────────── */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+    --radius-control: 6px;   /* 버튼·입력 */
+    --radius-surface: 8px;   /* 카드 */
+    --radius-dialog: 12px;
+    --radius-pill:   1000px;
+    --focus-ring: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
+    --content-max: 1200px;
+  }
+}
+
+/* 데이터 시각화 전용 — 색각이상 안전(Okabe-Ito). 반드시 모양/라벨 병행. */
+@layer tokens {
+  :root {
+    --viz-1: #0072B2; --viz-2: #E69F00; --viz-3: #009E73; --viz-4: #D55E00;
+    --viz-5: #56B4E9; --viz-6: #CC79A7; --viz-7: #F0E442; --viz-8: #000000;
+  }
+}

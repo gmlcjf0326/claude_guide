@@ -1,0 +1,38 @@
+/* COMPASS · KRDS → Tailwind v4 bridge
+   🇰🇷 Tailwind v4(CSS-first) 프로젝트용. 같은 값을 @theme으로 선언하면
+   유틸리티(bg-krds-blue-50 …)가 생성되고 var(--color-krds-blue-50)도 그대로
+   쓸 수 있다 — 한 소스, 두 소비자. (v3 사용자: tailwind.config theme.extend로 이식)
+   사용: 이 파일을 app 전역 CSS에서 tokens-krds.css와 함께 import. */
+@import "tailwindcss";
+
+@theme {
+  --color-krds-blue-5:  #ECF2FE;
+  --color-krds-blue-10: #D8E5FD;
+  --color-krds-blue-20: #B1CEFB;
+  --color-krds-blue-40: #4C87F6;
+  --color-krds-blue-50: #256EF4;
+  --color-krds-blue-60: #0B50D0;
+  --color-krds-blue-70: #083891;
+
+  --color-krds-gray-0:  #FFFFFF;
+  --color-krds-gray-5:  #F4F5F6;
+  --color-krds-gray-10: #E6E8EA;
+  --color-krds-gray-20: #CDD1D5;
+  --color-krds-gray-30: #B1B8BE;
+  --color-krds-gray-50: #6D7882;
+  --color-krds-gray-60: #58616A;
+  --color-krds-gray-90: #1E2124;
+
+  --color-krds-danger:  #DE3412;
+  --color-krds-success: #228738;
+  --color-krds-info:    #0B78CB;
+  --color-krds-warning: #FFB114;
+  --color-krds-warning-text: #9E6A00;
+
+  --font-sans: "Pretendard GOV Variable", "Pretendard Variable", Pretendard,
+    -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  --text-body: 1.0625rem;
+  --radius-control: 6px;
+  --radius-surface: 8px;
+}

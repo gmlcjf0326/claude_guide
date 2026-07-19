@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KRDS 스타터 — COMPASS public-sector design</title>
+  <!-- Pretendard GOV Variable · v1.3.9 고정 (KRDS 지정 서체) -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-gov-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="tokens-krds.css" />
+  <link rel="stylesheet" href="base-krds.css" />
+  <link rel="stylesheet" href="components-krds.css" />
+</head>
+<body>
+  <a class="krds-skiplink" href="#main">본문 바로가기</a>
+
+  <header class="krds-container u-py-4">
+    <strong class="u-text-lg">국민서비스포털 <span class="krds-badge krds-badge--neutral">프로토타입</span></strong>
+  </header>
+
+  <main id="main" class="krds-container krds-section u-stack-8">
+    <div class="prose u-stack-3">
+      <h1>민원 신청이 5분 안에 끝납니다</h1>
+      <p class="u-muted">
+        공인인증 없이 간편인증으로 로그인하고, 자주 쓰는 민원을 바로 신청하세요.
+        신청 진행 상황은 알림으로 알려드립니다.
+      </p>
+      <div class="u-row-3">
+        <button class="krds-btn krds-btn--primary">민원 신청하기</button>
+        <button class="krds-btn krds-btn--secondary">진행 상황 조회</button>
+        <button class="krds-btn krds-btn--tertiary">이용 안내</button>
+        <button class="krds-btn krds-btn--primary" disabled>비활성 예시</button>
+      </div>
+    </div>
+
+    <form class="krds-field u-max-form">
+      <label class="krds-label" for="rrn">신청인 연락처</label>
+      <span class="krds-hint">숫자만 입력 · 하이픈 없이</span>
+      <input class="krds-input" id="rrn" inputmode="numeric" placeholder="01012345678" />
+      <label class="krds-label u-mt-3" for="mail">이메일 (오류 상태 예시)</label>
+      <input class="krds-input" id="mail" aria-invalid="true" value="wrong@" />
+      <p class="krds-error">올바른 이메일 형식이 아닙니다</p>
+    </form>
+
+    <div class="krds-grid krds-grid--2">
+      <article class="krds-card">
+        <span class="krds-badge krds-badge--success">접수완료</span>
+        <h3 class="krds-card__title u-mt-2">주민등록등본 발급</h3>
+        <p class="krds-card__body">2026-07-12 접수 · 처리기한 즉시</p>
+      </article>
+      <article class="krds-card">
+        <span class="krds-badge krds-badge--warning">보완요청</span>
+        <h3 class="krds-card__title u-mt-2">건축물대장 열람</h3>
+        <p class="krds-card__body">첨부서류 1건 보완 필요 · 기한 07-20</p>
+      </article>
+    </div>
+
+    <div class="krds-alert krds-alert--danger" role="alert">
+      <span class="krds-alert__title">시스템 점검 안내</span>
+      07-15(수) 02:00–04:00 전자결제 서비스가 일시 중단됩니다.
+    </div>
+  </main>
+
+  <footer class="krds-container krds-footer">
+    이 페이지의 모든 텍스트/배경 조합은 KWCAG 2.2 AA(4.5:1)를 실측 통과했습니다.
+  </footer>
+</body>
+</html>

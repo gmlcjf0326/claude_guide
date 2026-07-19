@@ -1,0 +1,111 @@
+/* COMPASS · KRDS components — 공공 프로토타입 표준 부품. 전부 시맨틱 토큰만 소비.
+   🇰🇷 개별 태그 인라인 스타일 금지 — 스타일은 여기(또는 CSS Module)에 산다. */
+@layer components {
+
+  /* ── Skip link (KWCAG 필수) ─────────────────────────────────── */
+  .krds-skiplink {
+    position: absolute; left: -9999px; top: 0;
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-text-body); color: var(--color-text-inverse);
+    border-radius: 0 0 var(--radius-control) 0; z-index: 100;
+  }
+  .krds-skiplink:focus-visible { left: 0; }
+
+  /* ── Buttons — 화면당 primary 1개 원칙 ──────────────────────── */
+  .krds-btn {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    height: 48px; padding: 0 var(--space-4);
+    border: 1px solid transparent; border-radius: var(--radius-control);
+    font-size: var(--text-body); font-weight: var(--weight-regular);
+    cursor: pointer; text-decoration: none;
+    transition: background-color 150ms ease-out, border-color 150ms ease-out;
+  }
+  .krds-btn--primary { background: var(--color-action); color: var(--color-text-inverse); }
+  .krds-btn--primary:hover  { background: var(--color-action-hover); }
+  .krds-btn--primary:active { background: var(--color-action-active); }
+  .krds-btn--secondary {
+    background: var(--color-action-subtle); color: var(--color-action-hover);
+    border-color: var(--color-action);
+  }
+  .krds-btn--secondary:hover { background: var(--krds-blue-10); }
+  .krds-btn--tertiary {
+    background: transparent; color: var(--color-text-body);
+    border-color: var(--color-border-strong);
+  }
+  .krds-btn--tertiary:hover { background: var(--color-surface-subtle); }
+  .krds-btn:disabled {
+    background: var(--krds-gray-20); color: var(--krds-gray-50);
+    border-color: transparent; cursor: not-allowed;
+  }
+  .krds-btn--sm { height: 40px; font-size: var(--text-sm); }
+
+  /* ── Form field ────────────────────────────────────────────── */
+  .krds-field { display: grid; gap: var(--space-2); }
+  .krds-label { font-weight: var(--weight-bold); font-size: var(--text-sm); }
+  .krds-hint  { color: var(--color-text-muted); font-size: var(--text-sm); }
+  .krds-input {
+    height: 48px; padding: 0 var(--space-3);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background: var(--color-surface); color: var(--color-text-body);
+    font-size: var(--text-body);
+  }
+  .krds-input::placeholder { color: var(--color-text-muted); }
+  .krds-input[aria-invalid="true"], .krds-input.is-error { border: 2px solid var(--color-danger); }
+  .krds-error { color: var(--color-danger); font-size: var(--text-sm); font-weight: var(--weight-bold); }
+
+  /* ── Card — 그림자 대신 테두리 (KRDS) ───────────────────────── */
+  .krds-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-surface);
+    padding: var(--space-6);
+  }
+  .krds-card__title { font-size: var(--text-lg); font-weight: var(--weight-bold); margin-bottom: var(--space-2); }
+  .krds-card__body  { color: var(--color-text-muted); font-size: var(--text-sm); }
+
+  /* ── Badges — 실측 대비 통과 조합만 ─────────────────────────── */
+  .krds-badge {
+    display: inline-block; padding: 2px var(--space-2);
+    border-radius: 4px; font-size: var(--text-xs); font-weight: var(--weight-bold);
+  }
+  .krds-badge--primary { background: var(--color-action);  color: var(--color-text-inverse); }
+  .krds-badge--success { background: var(--color-success); color: var(--color-text-inverse); }
+  .krds-badge--danger  { background: var(--color-danger);  color: var(--color-text-inverse); }
+  .krds-badge--warning { background: var(--color-warning-bg); color: var(--color-text-body); } /* 8.9:1 */
+  .krds-badge--neutral { background: var(--color-surface-subtle); color: var(--krds-gray-60); }
+
+  /* ── Alert ─────────────────────────────────────────────────── */
+  .krds-alert {
+    display: grid; gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-info);
+    border-radius: var(--radius-control);
+    background: var(--color-surface-subtle);
+    font-size: var(--text-sm);
+  }
+  .krds-alert--danger  { border-left-color: var(--color-danger); }
+  .krds-alert--success { border-left-color: var(--color-success); }
+  .krds-alert--warning { border-left-color: var(--color-warning-bg); }
+  .krds-alert__title { font-weight: var(--weight-bold); font-size: var(--text-body); }
+
+  /* ── Layout helpers ────────────────────────────────────────── */
+  .krds-container { max-width: var(--content-max); margin-inline: auto; padding-inline: var(--space-6); }
+  .krds-section   { padding-block: var(--space-12); }
+  .krds-grid      { display: grid; gap: var(--space-6); }
+  .krds-grid--2   { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  /* ── Demo utilities (index.html이 인라인 대신 소비) ───────────── */
+  .u-stack-3 { display: grid; gap: var(--space-3); }
+  .u-stack-8 { display: grid; gap: var(--space-8); }
+  .u-row-3   { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+  .u-mt-2 { margin-top: var(--space-2); }
+  .u-mt-3 { margin-top: var(--space-3); }
+  .u-muted { color: var(--color-text-muted); }
+  .u-py-4 { padding-block: var(--space-4); }
+  .u-max-form { max-width: 420px; }
+  .u-text-lg { font-size: var(--text-lg); }
+  .krds-footer { padding-block: var(--space-8); color: var(--color-text-muted);
+    font-size: var(--text-sm); border-top: 1px solid var(--color-border); margin-top: var(--space-12); }
+}
