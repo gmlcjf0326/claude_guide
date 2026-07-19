@@ -49,8 +49,9 @@ case "$FILE_PATH" in
   *.env.example|*.env.sample|*.env.template) exit 0 ;;
 esac
 
+# Basename must BE .env or start with ".env." — ordinary sources like app.env.ts stay editable.
 case "$FILE_PATH" in
-  *.env|*.env.*|*/.env|*/.env.*)
+  .env|.env.*|*/.env|*/.env.*)
     if [ -f "$UNLOCK" ]; then
       exit 0   # test unlock ON — .env access permitted (values must still never be echoed to chat)
     fi
