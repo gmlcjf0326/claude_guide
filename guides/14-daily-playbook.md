@@ -18,21 +18,23 @@ CLOSE  /checkpoint  (the stop-gate hook won't let you leave [~] tasks dangling a
 
 ## 3. Situation → what to type (the cheat sheet)
 
-| 상황 | 입력 |
+Korean prompt text below is example input — drive COMPASS in YOUR language; the system carries the structure either way.
+
+| Situation · 상황 | You type · 입력 |
 |---|---|
-| 새 기능/제품 (반나절 이상) | `/spec 목표·상황·제약·모르는 것` |
-| 몇 시간짜리 중간 작업 | 그냥 설명 + "TODO에 완료기준 2~3개 적고 진행해" (medium path — SPEC 문서 생략) |
-| 계획된 다음 작업 | `/next` (또는 그냥 "다음 거 하자") |
-| 버그 | 에러/로그를 그대로 붙여넣기 — 재현 테스트부터 요구된다 |
-| 사소한 수정 | 그냥 말하기 ("헤더 오타 고쳐줘") — states 4→6만 탄다 |
-| 결과가 마음에 안 듦 | 즉시, 이유와 함께: "아니, 정렬은 최신순이 기본이어야지 — 사용자는 오늘 문서를 찾으러 온다" |
-| Claude 주장 검증 | "테스트 출력 그대로 보여줘" / "그 파일 지금 몇 줄이야?" |
-| 설계 고민 | `/advise 질문` (Opus 소환) |
-| 좋은 아이디어인데 지금 아님 | "BACKLOG에 넣어둬" |
-| 영구 지침 | `/remember 지침` |
-| 코드베이스가 답답해짐 | `/improve` |
-| 뭔가 이상하게 동작 | `/healthcheck` |
-| 세션 끝 / compact 전 | `/checkpoint` |
+| New feature/product, half-day+ · 새 기능/제품 | `/spec goal·context·constraints·unknowns` (`/spec 목표·상황·제약·모르는 것`) |
+| A few-hours middle-sized task · 몇 시간짜리 작업 | Just describe it + "put 2–3 acceptance bullets on the TODO and go" · "TODO에 완료기준 2~3개 적고 진행해" (medium path — no SPEC document) |
+| The next planned task · 계획된 다음 작업 | `/next` (or just "do the next one" · "다음 거 하자") |
+| A bug · 버그 | Paste the error/log verbatim — a repro test is demanded first · 에러/로그 그대로 붙여넣기 |
+| Trivial fix · 사소한 수정 | Just say it ("fix the header typo" · "헤더 오타 고쳐줘") — states 4→6 only |
+| Don't like the result · 결과 불만족 | Immediately, with the reason: "no — newest-first must be the default; users come to find TODAY's document" |
+| Verify a claim Claude made · 주장 검증 | "show me the raw test output" / "how many lines is that file NOW?" |
+| Hard design question · 설계 고민 | `/advise <question>` (summons the architect) |
+| Good idea, not now · 지금은 아닌 아이디어 | "park it in BACKLOG" · "BACKLOG에 넣어둬" |
+| A rule to keep forever · 영구 지침 | `/remember <directive>` |
+| Codebase feels heavy · 코드가 답답함 | `/improve` |
+| Something behaves oddly · 오동작 의심 | `/healthcheck` |
+| Session end / before compact · 세션 끝 | `/checkpoint` |
 
 ## 4. Worked session A — feature day one (13 prompts, annotated)
 
@@ -81,12 +83,12 @@ The system automates diligence, not judgment. Spend your focus here and skim eve
 
 | Anti-pattern | Why it hurts | Instead |
 |---|---|---|
-| 모든 프롬프트를 명령어로 치려 함 | 명령은 마디일 뿐 — 경직되고 느려진다 | 루프 중엔 자연어로 반응 |
-| 인터뷰에 "알아서 해줘" | 쓰레기 입력 → 훌륭하게 만든 엉뚱한 것 | 모르면 "모르니 추천해줘" — 그건 유효한 답 |
-| 체크포인트 없이 마라톤 | compact 한 번에 오후가 증발 | 60% 룰 + 작업 완료마다 상태 갱신은 자동 |
-| 증거 없이 "다음" | 미검증 낙관이 가장 비싼 버그 | "출력 보여줘"를 입버릇으로 |
-| 마음에 안 드는데 3턴 참기 | 늦은 피드백일수록 되돌릴 코드가 많다 | 즉시, 이유와 함께 교정 |
-| 배운 걸 대화에만 남김 | compact가 지운다 | `/remember` 3초 |
+| Typing every prompt as a command · 모든 프롬프트를 명령어로 | Commands are joints, nothing more — you get rigid and slow · 경직되고 느려진다 | React in natural language during the loop · 루프 중엔 자연어로 |
+| "Whatever you think" in the interview · 인터뷰에 "알아서 해줘" | Garbage input → a beautifully built wrong thing · 엉뚱한 것을 훌륭하게 만든다 | If unsure, "I don't know — recommend" IS a valid answer · "모르니 추천해줘" |
+| Marathon without checkpoints · 체크포인트 없는 마라톤 | One compaction can vaporize an afternoon · compact 한 번에 오후 증발 | The 60% rule + per-task state updates (automatic) |
+| "Next" without proof · 증거 없이 "다음" | Unverified optimism is the most expensive bug · 미검증 낙관이 최고가 버그 | Make "show me the output" a reflex · "출력 보여줘" 입버릇 |
+| Tolerating a bad result for 3 turns · 불만족을 3턴 참기 | Later feedback = more code to unwind · 늦을수록 되돌릴 게 많다 | Correct immediately, with the reason · 즉시, 이유와 함께 |
+| Leaving lessons only in chat · 배움을 대화에만 | Compaction erases them · compact가 지운다 | 3 seconds of `/remember` |
 
 ## 8. How your usage evolves
 

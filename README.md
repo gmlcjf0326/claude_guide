@@ -1,5 +1,6 @@
 # COMPASS
 
+> **First time here? → [`START_HERE.en.md`](START_HERE.en.md)** (English) — 30-minute onboarding: honest trade-offs, the two install traps, a practice mission, troubleshooting. This README is the full reference; the one-page manual is [`COMPASS-USAGE-GUIDE.en.md`](COMPASS-USAGE-GUIDE.en.md).
 > **🇰🇷 처음이신가요? → [`START_HERE.md`](START_HERE.md)** — 30분 온보딩: 정직한 장단점, 설치 함정 2개, 연습 미션, 문제해결. 이 README는 전체 참조 문서이고, 한 장짜리 전체 사용법은 [`COMPASS-USAGE-GUIDE.md`](COMPASS-USAGE-GUIDE.md)입니다.
 
 **An agentic engineering operating system for Claude Code** — clarify-first interviews, trade-off-driven decisions, bloat-proof modules, an always-current codebase index, living checklists, and a durable-state architecture that survives 1M+ token, multi-week projects.
@@ -251,4 +252,4 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 
 ---
 
-MIT License · COMPASS v1.14.1 · Built for solo developers running Sonnet-as-builder + Opus-as-advisor.
+MIT License · COMPASS v1.15.0 · Optimized for solo developers (teams: see the append-style SESSION_LOG and clean-tree stop-gate notes) running Sonnet-as-builder + Opus-as-advisor.

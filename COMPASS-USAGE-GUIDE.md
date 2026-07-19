@@ -1,6 +1,6 @@
-# COMPASS 사용설명서 (v1.14.1 · 완전판 한 장 요약)
+# COMPASS 사용설명서 (v1.15.0 · 완전판 한 장 요약)
 > 이 문서 하나로 시스템 전체의 사용법을 커버합니다. 작업하며 옆에 펴놓는 매뉴얼.
-> 온보딩은 `START_HERE.md`, 세부 근거는 `guides/00–16`, 이 문서는 "어떻게 쓰는가"의 전부.
+> 온보딩은 `START_HERE.md`, 세부 근거는 `guides/00–16`, 이 문서는 "어떻게 쓰는가"의 전부. · English version: `COMPASS-USAGE-GUIDE.en.md`
 
 ---
 
@@ -137,8 +137,8 @@ claude 실행 → /effort max → /setup → /healthcheck → /spec 첫 목표
 
 ## 11. 디자인 작업 — "AI 티" 안 나게
 
-- **에셋은 첫 작업의 일부**: 아이콘은 lucide-react(이모지 금지), 폰트는 한국어 제품이면 Pretendard Variable(레시피: 가이드12 §7), 이미지는 프로토=picsum/프로덕션=다운로드+CREDITS.md. 시스템폰트+이모지 화면은 초안이 아니라 리뷰 차단 대상.
-- **인라인 스타일 금지** (효율 원칙): 태그별 `style=` 금지 — 예외 3개만(JS 계산 동적값 / CSS변수 주입 / 인스턴스별 런타임값). 구조는 `tokens→base→components→utilities` + `@layer`.
+- **에셋은 첫 작업의 일부**: 아이콘은 lucide-react(이모지 금지), 폰트는 한국어 제품이면 Pretendard Variable(레시피: 가이드12 §7), 이미지는 프로토=picsum/프로덕션=다운로드+CREDITS.md. 단계 게이트: PROJECT.md가 프로덕션 품질 기준을 선언한 경우 리뷰 차단, 프로토타입/내부도구는 권고.
+- **인라인 스타일 금지** (효율 원칙): 태그별 `style=` 금지 — 예외 4개(JS 계산 동적값 / CSS변수 주입 / 인스턴스별 런타임값 / HTML 이메일 등 인라인 컴파일 대상). 구조는 `tokens→base→components→utilities` + `@layer`. 일반 프로젝트 토큰 출발점: `templates/design/tokens-neutral.css`.
 - **공공기관 프로젝트**: `templates/design/`의 KRDS 토큰이 출발점 — 모든 색 조합 실측 검증(본문 16.18:1 등), **매직넘버 법칙**(토큰 등급차 ≥50 ⇒ 4.5:1)으로 암산 준수. 정적 사이트=css 3개 링크, React=tailwind 브릿지 import. 상황별(중앙부처/지자체/대시보드) 응용: 가이드16.
 - 취향 전달의 정석: 좋아하는 화면 **캡쳐 2~3장**을 /spec 때 주기 — 말보다 대역폭이 큼. 캡쳐 재현이 필요하면 픽셀 색 샘플링 → 렌더 → 비교 반복 루프로 맞춰가세요 (Playwright MCP 시각 검증 활용법: 가이드12 §6).
 
@@ -180,7 +180,7 @@ docs/                   ★ 당신의 상태 — 업그레이드 시 보존!
   PROJECT SPEC PLAN TODO PROGRESS CODEBASE_MAP DECISIONS SESSION_LOG BACKLOG
   inputs/(사전연구 투입구) research/(조사 영구보관)
 guides/00–16            심층 근거 (07 장기전 · 08 도커 · 13 앱수익화 · 14 실전대본 · 16 공공디자인)
-templates/              문서 템플릿 · docker/ · ci/ · design/(KRDS 토큰+데모)
+templates/              문서 템플릿 · docker/ · ci/ · design/(중립 토큰 + KRDS 토큰·데모)
 ```
 
 ---

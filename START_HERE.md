@@ -1,6 +1,6 @@
 # START HERE — 처음 오신 분을 위한 완전 가이드
 > 이 문서 하나만 따라 하면 30분 안에 COMPASS가 몸에 붙습니다. 전문 지식 불필요.
-> (숙련자는 README.md로 바로 가셔도 됩니다.)
+> (숙련자는 README.md로 바로 가셔도 됩니다. · English version: `START_HERE.en.md`)
 
 ## 1. 이게 뭔가요? (3줄 요약)
 
@@ -91,7 +91,7 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 | 훅이 아무 반응 없음 (Windows) | PowerShell/CMD에서 실행 중 — **WSL이나 Git Bash에서 `claude` 실행** |
 | 세션 시작 브리핑이 안 뜸 | `/healthcheck` 실행 → 훅 등록 여부 진단. `docs/` 폴더 존재도 확인 |
 | 영어로 대답함 | 첫 메시지에 "한국어로" 한 번, 또는 `/remember 모든 대화는 한국어로` — 이후 영구 |
-| 비대화 경고(BLOAT)가 성가심 | `.claude/hooks/post-edit.sh`의 300/500 숫자를 조정하거나 해당 블록 삭제 |
+| 비대화 경고(BLOAT)가 성가심 | `.claude/compass.conf`에 `COMPASS_BLOAT_SOFT/HARD` 지정(레거시면 /setup이 물어보고 써줌) 또는 해당 훅 블록 삭제 |
 | "in-progress 작업이 있다"며 종료를 막음 | 정상 동작(stop-gate). TODO의 `[~]`를 `[x]`나 `[!]사유`로 정리하면 통과 |
 | `jq` 없다는 걱정 | 없어도 동작합니다(폴백 내장). 설치하면 조금 더 견고할 뿐 |
 | 테스트 키를 .env에 넣어달랬는데 거부함 | 기본 잠금 상태입니다. `/secrets on` 한 번이면 열립니다 (끝나면 `/secrets off`) |
@@ -113,10 +113,12 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 ```
 
 ```bash
-# 안전 업그레이드 예시
+# 안전 업그레이드 예시 (rsync 불필요 — Git Bash에서도 동작)
+cp .claude/rules/project-directives.md /tmp/pd.bak
 cp -r 새버전/COMPASS/guides ./ && cp 새버전/COMPASS/CLAUDE.md ./
 cp -r 새버전/COMPASS/templates ./
-rsync -a --exclude 'rules/project-directives.md' 새버전/COMPASS/.claude/ .claude/
+cp -r 새버전/COMPASS/.claude/. .claude/
+cp /tmp/pd.bak .claude/rules/project-directives.md
 ```
 
 **제거** — `CLAUDE.md`, `.claude/`, `guides/`, `templates/` 삭제하면 원상복구. `docs/`는 당신의 프로젝트 기록이니 남겨두세요.
