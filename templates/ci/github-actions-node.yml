@@ -2,6 +2,7 @@
 # 🇰🇷 로컬 게이트(lint·typecheck·test)를 CI에서도 강제한다. 복사: .github/workflows/ci.yml
 # Rust: swap steps for `cargo clippy --all-targets -- -D warnings` + `cargo test`
 # Python: `uv sync` → `ruff check .` → `pytest -q`
+# Go: actions/setup-go → `go vet ./...` + `go test ./...`  ·  JVM: actions/setup-java → `./gradlew test` / `mvn -q test`
 # REQUIRED: pnpm/action-setup@v4 reads the pnpm version from package.json's
 #   "packageManager" field (e.g. "packageManager": "pnpm@9.15.0") — add it, or
 #   pass `with: { version: 9 }` below. npm users: drop the pnpm step and use npm ci.

@@ -243,7 +243,7 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 
 **Q. 꼭 /spec부터 해야 하나요?** 사소한 수정(한 줄 수정, 오타)은 아닙니다 — 상태 머신의 4→5→6만 탑니다. 그 외는 /spec이 결국 더 빠릅니다: 잘못 만든 것을 다시 만드는 비용이 인터뷰 비용보다 항상 큽니다.
 
-**Q. 훅이 너무 엄격하면?** `.claude/settings.json`에서 개별 훅 블록을 제거하면 해당 강제만 꺼집니다(문서 규칙은 유지됨). 비대화 임계값은 `post-edit.sh`의 300/500 숫자를 수정하세요.
+**Q. 훅이 너무 엄격하면?** `.claude/settings.json`에서 개별 훅 블록을 제거하면 해당 강제만 꺼집니다(문서 규칙은 유지됨). 비대화 임계값은 `.claude/compass.conf`에 `COMPASS_BLOAT_SOFT=400` / `COMPASS_BLOAT_HARD=800`처럼 적으면 됩니다(/setup의 레거시 질문이 대신 써주기도 합니다). 500줄 초과 파일도 '더 자랄 때만' 경고하므로 레거시 리포에서 잔소리가 반복되지 않습니다.
 
 **Q. 토큰 비용은?** 상시 로드는 CLAUDE.md ~95줄 + 영구지침 + 세션 훅이 주입하는 상태 요약이 전부입니다. rules는 해당 파일을 만질 때만, skills는 발동 시에만 로드됩니다. 서브에이전트는 별도 컨텍스트라 본대를 오염시키지 않습니다.
 

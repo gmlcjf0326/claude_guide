@@ -149,7 +149,7 @@ claude 실행 → /effort max → /setup → /healthcheck → /spec 첫 목표
 - `/remember 한 줄` — 오늘 배운 규칙 영구화 (분류는 시스템이).
 - 반복 요청 → **명령으로 승격**: "매일 아침 루틴을 /morning 명령으로 만들어줘" (내장 충돌은 /healthcheck가 감시).
 - 같은 실수 2회 → `/improve`가 **승격 사다리**(관찰→규칙→체크리스트→훅) 제안 — 시스템이 스스로 배웁니다.
-- 임계값 조정: 비대화 300/500은 `post-edit.sh`, 카운터 25/50/75도 같은 파일. 훅이 싫으면 settings.json에서 해당 블록 삭제(문서 규칙은 유지됨).
+- 임계값 조정: 비대화 300/500은 `.claude/compass.conf`의 `COMPASS_BLOAT_SOFT/HARD`로 (레거시면 /setup이 물어보고 써줌); 카운터 25/50/75는 `post-edit.sh`. 훅이 싫으면 settings.json에서 해당 블록 삭제(문서 규칙은 유지됨).
 
 ---
 

@@ -20,7 +20,10 @@ D="$ROOT/docs"
 
 PHASE="-"; OPEN=0; WIP=0; EDITS=0
 if [ -f "$D/PROGRESS.md" ]; then
-  PHASE="$(grep -m1 -o '\*\*Phase:\*\*[^·|]*' "$D/PROGRESS.md" 2>/dev/null | sed 's/\*\*Phase:\*\*[[:space:]]*//; s/[[:space:]]*$//' | cut -c1-24)"
+  PHASE_LINE="$(grep -m1 '\*\*Phase:\*\*' "$D/PROGRESS.md" 2>/dev/null | sed 's/.*\*\*Phase:\*\*[[:space:]]*//')"
+  PHASE="${PHASE_LINE%%·*}"; PHASE="${PHASE%%|*}"   # byte-safe split (0xC2B7 never occurs inside Hangul UTF-8)
+  PHASE="$(printf '%s' "$PHASE" | sed 's/[[:space:]]*$//')"
+  # No hard truncation: byte-based cuts corrupt multibyte (Korean) phase names.
   [ -z "$PHASE" ] && PHASE="-"
 fi
 if [ -f "$D/TODO.md" ]; then

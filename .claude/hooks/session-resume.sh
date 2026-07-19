@@ -52,9 +52,12 @@ else
   SUGGEST="/spec <next goal> or /improve"; WHY="no open tasks — start the next goal, or invest in the codebase"
 fi
 
-# Away detection (>7 days since last session log write) — prepend a deep-restore hint
+# Away detection (>7 days since last session log write) — prepend a deep-restore hint.
+# Requires at least one REAL dated entry, so a fresh unzip (shipped mtimes) never false-fires.
 AWAY=""
-[ -f "$D/SESSION_LOG.md" ] && [ -n "$(find "$D/SESSION_LOG.md" -mtime +7 -print 2>/dev/null)" ] && AWAY="yes"
+if [ -f "$D/SESSION_LOG.md" ] && grep -qE '^## 20[0-9]{2}-' "$D/SESSION_LOG.md" 2>/dev/null; then
+  [ -n "$(find "$D/SESSION_LOG.md" -mtime +7 -print 2>/dev/null)" ] && AWAY="yes"
+fi
 
 # Map staleness heuristic: TODO moved while the map didn't, across ≥5 completed tasks
 MAP_NOTE=""
@@ -73,7 +76,7 @@ echo "--- CO-PILOT ---"
 echo "Situation: $WHY"
 echo "Suggested next: $SUGGEST"
 [ -n "$MAP_NOTE" ] && echo "$MAP_NOTE"
-echo "(Open your first reply by relaying this suggestion to the user in one line, then proceed. Respond in the user's language — 한국어 사용자에게는 모든 질문과 보고를 한국어로.)"
+echo "(Open your first reply by relaying this suggestion to the user in one line, then proceed. Respond in the user's language, honoring any language directive in .claude/rules/project-directives.md.)"
 
 if [ "$FOUND" -eq 0 ]; then
   echo "=== No durable state yet. First time here? run /setup. ==="

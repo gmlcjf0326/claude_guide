@@ -27,7 +27,20 @@
       "Bash(pytest:*)",
       "Bash(tsc --noEmit:*)",
       "Bash(ls:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(go test:*)",
+      "Bash(go vet:*)",
+      "Bash(go build:*)",
+      "Bash(gofmt:*)",
+      "Bash(./gradlew test:*)",
+      "Bash(gradle test:*)",
+      "Bash(mvn test:*)",
+      "Bash(dotnet test:*)",
+      "Bash(composer test:*)",
+      "Bash(bundle exec rspec:*)",
+      "Bash(mix test:*)",
+      "Bash(yarn test:*)",
+      "Bash(yarn lint:*)"
     ]
   },
   "hooks": {

@@ -14,10 +14,19 @@ else
 fi
 [ "$ACTIVE" = "true" ] && exit 0
 
-D="${CLAUDE_PROJECT_DIR:-.}/docs"
+ROOT="${CLAUDE_PROJECT_DIR:-.}"
+D="$ROOT/docs"
 T="$D/TODO.md"
 P="$D/PROGRESS.md"
 [ -f "$T" ] || exit 0
+
+# Committed = saved: a clean working tree means every TODO state is already
+# checkpointed into git. Also fixes false blocks after clone/pull, where git
+# rewrites mtimes and the mtime comparison below can no longer be trusted.
+if git -C "$ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
+   && [ -z "$(git -C "$ROOT" status --porcelain 2>/dev/null)" ]; then
+  exit 0
+fi
 
 # Checkpoint-aware: state saved AFTER the last TODO change → intentional carry-over, allow.
 if [ -f "$P" ] && [ "$P" -nt "$T" ]; then
