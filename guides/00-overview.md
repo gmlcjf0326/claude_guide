@@ -16,14 +16,14 @@ Official guidance is explicit: memory files are "context, not enforced configura
 > 🇰🇷 판단이 필요한 규칙은 문서로, 무조건 지켜야 하는 규칙은 훅으로. 프롬프트는 요청이고 훅은 법이다.
 
 ### 2. The instruction budget is real
-Frontier models follow roughly 150–200 instructions consistently, and the harness spends dozens of those already. So the root CLAUDE.md stays lean (~100 lines) and everything else loads *only when relevant*:
+A practical rule of thumb — community-observed, not an official spec — is that frontier models follow roughly 150–200 instructions consistently, and the harness spends dozens of those already. So the root CLAUDE.md stays lean (~100 lines) and everything else loads *only when relevant*:
 
 | Layer | Loads when | Cost when idle |
 |---|---|---|
 | `CLAUDE.md` | every session | always paid — keep lean |
 | `.claude/rules/*.md` | a matching file is touched (`paths:` frontmatter) | ~0 |
-| Skills (`SKILL.md`) | task matches its description | ~60 tokens (name+description) |
-| Subagents | explicitly or auto-delegated | 0 (separate context) |
+| Skills (`SKILL.md`) | task matches its description | ~60–110 tokens (name+description) |
+| Subagents | explicitly or auto-delegated | name+description always loaded (~100 tokens each); execution runs in a separate context |
 | `guides/*.md` | Claude reads them on demand | 0 |
 
 ### 3. Disk is truth; context is cache

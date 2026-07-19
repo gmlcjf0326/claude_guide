@@ -5,7 +5,7 @@ Operational rules live in the `codebase-map` skill. This guide shows what good l
 
 ## Why decision-level, with evidence
 
-A 2026 study of repository context files (138 real issues, multiple agents) found that LLM-generated structural overviews *lowered* success rates in most settings while adding 20%+ inference cost — while concise, human-curated context helped. The mechanism is intuitive: an auto-dumped file tree is stale within days, and stale directions are worse than no directions. So the map records what a tree cannot: **purpose, boundaries, invariants, and where new things go** — the facts that survive renames.
+A 2026 study of repository context files (138 real issues, multiple agents — figures as circulated; verify before citing) found that LLM-generated structural overviews *lowered* success rates in most settings while adding 20%+ inference cost — while concise, human-curated context helped. The direction, not the exact numbers, is the load-bearing claim. The mechanism is intuitive: an auto-dumped file tree is stale within days, and stale directions are worse than no directions. So the map records what a tree cannot: **purpose, boundaries, invariants, and where new things go** — the facts that survive renames.
 
 ## An annotated example (solo-dev SaaS)
 

@@ -95,7 +95,7 @@ Already running "Opus advisor + Sonnet worker, max effort, plan mode, bypass per
 | Set Opus advisor + Sonnet worker by hand | `/setup` asks once (step 3c) and enables `opusplan` in `.claude/settings.local.json` + `model: opus` pins on `architect` / `/setup` `/spec` `/blueprint` | One interview answer — no hand-editing |
 | `/effort max` | Keep it; `ultrathink` is additionally baked into `/setup` `/spec` `/blueprint` `/improve` | Unchanged |
 | Declare the goal in plan mode | `/setup` (once per project) → `/spec` (per feature) → `/blueprint` | The plan lands on **disk** (PLAN.md/TODO.md), not in volatile context |
-| `--dangerously-skip-permissions` on the host | Same flag, **inside the devcontainer** (`templates/docker/devcontainer.json`); `acceptEdits` on the host | Hooks (secrets-block, bloat, stop-gate) still run even in bypass mode — but the container wall is the real safety |
+| `--dangerously-skip-permissions` on the host | Same flag, **inside the devcontainer** (`templates/docker/devcontainer.json`); `acceptEdits` on the host | Hooks (secrets-block, bloat, stop-gate) still run even in bypass mode — but the container wall is the real safety. Note: the shipped devcontainer has NO network firewall; for full isolation add one (Anthropic's reference devcontainer ships an allowlist firewall script — guide 08 §1) |
 | Near the window limit: "save to memory" → `/compact` | At **~60%**: `/checkpoint` → `/compact` (focused); at a phase boundary: `/checkpoint` → `/clear` | Ad-hoc saving becomes a protocol; state auto-reinjects via the SessionStart hook. Directives go to `/remember`, state goes to `/checkpoint` — two tools, not one vague ask |
 
 > 🇰🇷 요약: 습관은 그대로, 위치와 타이밍만 바뀐다 — 계획은 디스크로, bypass는 컨테이너로, 저장은 60%에서 프로토콜로.
@@ -121,7 +121,7 @@ Already running "Opus advisor + Sonnet worker, max effort, plan mode, bypass per
 |---|---|---|
 | CLAUDE.md | every session | always (kept lean on purpose) |
 | rules/*.md | when a matching file is touched | ~0 |
-| skills | when the task matches the description | ~60 tokens each |
+| skills | when the task matches the description | ~60–110 tokens each (description only) |
 | subagents / guides / templates | on invocation / on demand | 0 |
 
 ---
@@ -140,7 +140,7 @@ Already did deep research, wrote a PRD, or have requirement notes? Drop those `.
 
 ## Public-sector design layer — 공공기관 디자인 (KRDS)
 
-For Korean government/public-institution work, `templates/design/` ships a **measured, not asserted** design layer: KRDS-anchored token file (every text/background pair computed against WCAG — 16/16 PASS, e.g. body 16.18:1, buttons 4.55:1), base stylesheet encoding Korean typography law (Pretendard GOV 17px · 150% · letter-spacing 0 · `word-break: keep-all`), reference components (buttons/forms/cards/badges/alerts — borders not shadows, one primary per screen), a Tailwind v4 `@theme` bridge, and a zero-inline-style demo page. The **magic-number rule** (token grade diff ≥50 ⇒ 4.5:1) lets you pick compliant pairs by arithmetic. Per-client playbook (표준형/확장형/GOV.UK풍/대시보드): `guides/16-public-sector-design.md`. Inline `style=` on tags is now review-blocking everywhere (three honest exceptions documented).
+For Korean government/public-institution work, `templates/design/` ships a **measured, not asserted** design layer: KRDS-anchored token file (every text/background pair computed against WCAG — 16/16 PASS, e.g. body 16.18:1, buttons 4.55:1), base stylesheet encoding Korean typography law (Pretendard GOV 17px · 150% · letter-spacing 0 · `word-break: keep-all`), reference components (buttons/forms/cards/badges/alerts — borders not shadows, one primary per screen), a Tailwind v4 `@theme` bridge, and a zero-inline-style demo page. The **magic-number rule** (token grade diff ≥50 ⇒ 4.5:1) lets you pick compliant pairs by arithmetic. Per-client playbook (표준형/확장형/GOV.UK풍/대시보드): `guides/16-public-sector-design.md`. Inline `style=` on tags is review-blocking (four honest exceptions documented, incl. HTML email). **Non-Korean / general projects**: the same measured-pairs approach ships brand-neutral as `templates/design/tokens-neutral.css` — start there and swap the accent for your brand.
 
 > 🇰🇷 공공 작업의 접근성은 주장이 아니라 실측이다 — 토큰 파일의 모든 조합이 계산으로 검증되어 있고, 리뷰어가 인라인 스타일과 4.5:1 미달을 차단한다.
 

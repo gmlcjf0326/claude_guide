@@ -15,7 +15,7 @@ paths:
 > 🇰🇷 UI 코드 작업 시 자동 적용. 심화: guides/12-design-system.md.
 
 ## Tokens before pixels
-- Every color, spacing, radius, and font size comes from the token layer (CSS custom properties / Tailwind theme / theme package). A hardcoded hex or magic px in a component is a violation — add or use a token.
+- Every color, spacing, radius, and font size comes from the token layer (CSS custom properties / Tailwind theme / theme package). A hardcoded hex or magic px in a component is a violation — add or use a token. No token file yet? Start from `templates/design/tokens-neutral.css` (brand-neutral, every pair contrast-verified); Korean public-sector work starts from `templates/design/tokens-krds.css` instead.
 - Spacing on a 4px grid (4·8·12·16·24·32·48·64). One type scale: ~5 sizes + 2 weights, defined once.
 - Colors are **semantic** (`--color-bg`, `--color-surface`, `--color-text-muted`, `--color-danger`) mapped to a palette. Dark mode = remapping semantic tokens, never per-component overrides.
 

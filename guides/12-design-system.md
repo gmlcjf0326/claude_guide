@@ -17,7 +17,7 @@ Users can't articulate why an app feels trustworthy, but the ingredients are mea
 | **C — Radix primitives + your own styling** | Maximum control, minimum opinion. | You are building a design system as a side quest; weeks disappear. |
 | **D — Full framework (MUI etc.)** | Everything included. | The "MUI look" is hard to escape; heavy; fighting the theme layer becomes the job. |
 
-**Recommendation:** for React apps where polish-per-hour matters (this user), **A (Astryx)** — the agent-ready design is a direct fit for COMPASS workflows, and the no-lock-in escape hatches (className overrides, swizzle) cap the beta risk. Choose **B** when full source ownership is a hard requirement. Record the choice in `docs/DECISIONS.md` with the beta caveat as the revisit trigger.
+**Recommendation:** for React apps where polish-per-hour matters (the typical COMPASS solo-dev profile), **A (Astryx)** — the agent-ready design is a direct fit for COMPASS workflows, and the no-lock-in escape hatches (className overrides, swizzle) cap the beta risk. Choose **B** when full source ownership is a hard requirement. Record the choice in `docs/DECISIONS.md` with the beta caveat as the revisit trigger.
 
 ### Astryx working agreement (for the agent)
 1. Install `@astryxdesign/core` + one theme (`@astryxdesign/theme-neutral` to start) + `@astryxdesign/cli` (dev). Add the package.json script so the CLI is reliably invokable: `"astryx": "node node_modules/@astryxdesign/cli/bin/astryx.mjs"`.
@@ -70,7 +70,7 @@ Design gaps come in three kinds, each with its own fix:
 
 **Visual-level** ("만든 게 실제로 괜찮아 보이나?") — the agent can *see* its work: activate the Playwright MCP (`cp templates/.mcp.json.example .mcp.json`, trim to what you need), then the loop is: run the dev server → screenshot the page → compare against intent (tokens respected? hierarchy scannable? states present?) → fix → screenshot again. Screenshots turn "should look fine" into verified.
 
-**Taste-level** ("Meta 감성이 나는가?") — taste does not transfer through words alone. The highest-bandwidth input is 2–3 reference screenshots from the user ("좋아하는 Meta 화면을 캡처해서 주세요") pasted into the conversation during /spec — the agent extracts the concrete properties (density, radius, contrast, motion) and encodes them as tokens. Ask for references; don't guess at vibes.
+**Taste-level** ("원하는 감성이 나는가?") — taste does not transfer through words alone. The highest-bandwidth input is 2–3 reference screenshots from the user ("좋아하는 제품 화면을 캡처해서 주세요") pasted into the conversation during /spec — the agent extracts the concrete properties (density, radius, contrast, motion) and encodes them as tokens. Ask for references; don't guess at vibes.
 
 ## 7. Asset cookbook — 복붙해서 쓰는 무료 에셋 레시피
 

@@ -32,7 +32,7 @@ The SessionStart hook already injected PROGRESS's tail and open TODO items. For 
 ### During
 - **Update state as you go** (Rule 4): `[~]` when starting, `[x]`/`[!]` when ending a task, 2–3 PROGRESS lines per task. A crash at minute 55 should cost 5 minutes.
 - **Offload wide reading** to `explorer`; consult `docs/CODEBASE_MAP.md` before any search.
-- **Watch context usage.** At ~60%: finish the current small step → `/checkpoint` → `/compact` with a focus prompt (below). Waiting for auto-compact (~80%+) means the summary is written from an already-degraded state.
+- **Watch context usage.** At ~60%: finish the current small step → `/checkpoint` → `/compact` with a focus prompt (below). Waiting for auto-compact means the summary is written from an already-degraded state (Claude Code publishes no exact auto-compact threshold, and it moves between versions — another reason to act at ~60% yourself).
 - **One task at a time** (`/next`). Parallel half-finished tasks are how `[~]` zombies breed.
 
 ### Closing (3 minutes)
