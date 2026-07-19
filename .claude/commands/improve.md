@@ -2,7 +2,7 @@
 description: Continuous-improvement retrospective — find the top 3 improvements and present them as options
 ---
 
-ultrathink. This is State-7 thinking: make the system better, not just the feature.
+ultrathink. This is the final S of COMPASS — Sustain: make the system better, not just the feature.
 > 🇰🇷 항상 더 나은 방향으로. 단, 실행은 사용자가 고른 뒤에만.
 
 1. Gather signals: files over 300 lines (`explorer` subagent can list them) · duplication candidates · drift between `docs/SPEC.md` and reality · "Improve" lines accumulated in `docs/SESSION_LOG.md` · recurring mistakes this project keeps making.
