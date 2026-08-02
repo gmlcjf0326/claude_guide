@@ -33,7 +33,7 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 run claude → /effort max → /setup → /healthcheck → /spec first-goal
 ```
 
-- `/setup` (once per project): a 5–8-question interview writes the **project charter** (docs/PROJECT.md) — stage, business model, quality bias, non-negotiables. Permanent directives you answer here land in project-directives.md and load forever. Have prior research? Drop it in `docs/inputs/` first — it reads everything and skips questions your documents already answer.
+- `/setup` (once per project): a 5–8-question interview writes the **project charter** (docs/PROJECT.md) — stage, business model, quality bias, non-negotiables. Permanent directives you answer here land in project-directives.md and load forever. Have prior research (RFP, PRD, notes — HWPX/PDF/DOCX included)? Drop it in `docs/inputs/` — it ingests and distills first, then skips questions your documents already answer. **You can drop files mid-project too** (the hook flags un-ingested material). A SPEC drafted from documents stays unsigned, and `/blueprint` refuses to plan on it until you confirm it.
 - `/healthcheck`: self-diagnoses hooks, all 14 commands, state files, and gates. Whenever anything feels off, start here.
 
 ---
@@ -179,7 +179,7 @@ START_HERE(.en).md      beginner onboarding / README.md full reference
   rules/   stack auto-load + project-directives.md (always on — your permanent rules)
 docs/                   ★ YOUR STATE — preserve on upgrades!
   PROJECT SPEC PLAN TODO PROGRESS CODEBASE_MAP DECISIONS SESSION_LOG BACKLOG
-  inputs/ (drop zone for prior research)  research/ (permanent findings)
+  inputs/ (drop zone + INGESTED.md ledger)  research/ (permanent findings)
 guides/00–16            deep rationale (07 long-horizon · 08 docker · 13 monetization · 14 playbook · 16 KRDS)
 templates/              doc templates · docker/ · ci/ · design/ (neutral + KRDS tokens)
 ```

@@ -118,7 +118,7 @@ Already running "Opus advisor + Sonnet worker, max effort, plan mode, bypass per
 | `.claude/commands/` | `/setup` `/spec` `/blueprint` `/next` `/inspect` `/checkpoint` `/restore` `/map` `/improve` `/advise` `/healthcheck` `/remember` `/research` `/secrets` |
 | `.claude/skills/` | requirement-interview · tradeoff-analysis · codebase-map · bloat-guard · long-horizon · definition-of-done · **research** |
 | `.claude/rules/` | **project-directives (always-on 영구 지침)** + path-scoped stack conventions: TypeScript · Rust/Tauri · Python · Java · Supabase/Firebase · PostgreSQL · AI/LLM · Docker · UI/Design |
-| `docs/` | **Durable state** (pre-seeded): **PROJECT (charter)** · SPEC · PLAN · TODO · PROGRESS · CODEBASE_MAP · DECISIONS · SESSION_LOG · BACKLOG · **inputs/ (참고 자료 투입구)** · **research/ (조사 보관소)** |
+| `docs/` | **Durable state** (pre-seeded): **PROJECT (charter)** · SPEC · PLAN · TODO · PROGRESS · CODEBASE_MAP · DECISIONS · SESSION_LOG · BACKLOG · **inputs/ (참고 자료 투입구 + INGESTED.md 흡수 원장)** · **research/ (조사 보관소)** |
 | `guides/00–16` | Deep rationale, read on demand — incl. **07 Long-Horizon (1M+ tokens)**, **08 Docker**, **12 Design Systems (Astryx)**, **13 Mobile Apps & Monetization**, **14 Daily Playbook (실전 운전법)**, **15 Scenarios by Scale (규모별 3막 시나리오)**, **16 Public-Sector Design (KRDS)** |
 | `templates/` | Pristine copies of every docs file + Docker templates + **CI workflow** + **design/ (KRDS 토큰·컴포넌트·데모)** + `.mcp.json.example` |
 
@@ -139,9 +139,16 @@ Already running "Opus advisor + Sonnet worker, max effort, plan mode, bypass per
 
 ## Bringing your own research — docs/inputs/
 
-Already did deep research, wrote a PRD, or have requirement notes? Drop those `.md` files into **`docs/inputs/`** before running `/setup`. It reads them first, distills the key facts into `docs/PROJECT.md`, drafts a `docs/SPEC.md` from your requirements, files reusable findings into `docs/research/`, and then interviews you only about what your documents *didn't* already answer — surfacing any conflicts instead of silently resolving them. The originals stay as source-of-truth but never load every session (zero idle token cost). Messy input is fine; state your goal and hard constraints explicitly and `/setup` extracts the rest.
+Already did deep research, wrote a PRD, or hold an RFP? Drop the files into **`docs/inputs/`**. The ingest procedure (`/setup` §0, or `/spec` when it targets one feature) inventories the folder, distills key facts into `docs/PROJECT.md`, drafts a `docs/SPEC.md`, files reusable findings into `docs/research/`, and then interviews you only about what your documents *didn't* answer — surfacing conflicts instead of silently resolving them. Originals stay as source-of-truth and never load every session (zero idle cost). Four properties make this hold up in practice:
 
-> 🇰🇷 미리 연구한 문서를 `docs/inputs/`에 넣고 `/setup`을 실행하면, 그 내용을 먼저 분석해 PROJECT·SPEC 초안·research로 증류하고, 문서가 답하지 않은 것만 인터뷰합니다. 원본은 항상 로드되지 않아 토큰 낭비가 없습니다.
+| | |
+|---|---|
+| **Any format, stated honestly** | `.md`/`.txt` direct · `.pdf` via `pdftotext`/page-wise Read · `.docx`/`.pptx`/`.xlsx` via pandoc or XML unzip · **`.hwpx` via `Contents/section*.xml`** · images read as design intent, not requirements. Legacy binary `.hwp` has no reliable path — COMPASS asks you to re-export rather than guess, and **never skips a file silently** |
+| **Any time, not just Day-0** | Drop files mid-project: the SessionStart hook compares `docs/inputs/` against the ledger and flags un-ingested or revised material in the next briefing |
+| **Read once** | `docs/inputs/INGESTED.md` records what was distilled, when, and to where — re-runs skip what's covered. Files over ~1,500 lines go to the `explorer` subagent instead of the main context, and the summary says which files were read in full vs. delegated |
+| **Documents are evidence, not sign-off** | An inputs-derived SPEC stays `Signed off by user: ☐`; `/spec` reads the document-derived MUSTs back for confirmation and **`/blueprint` refuses to plan on an unsigned SPEC**. Conflicts you resolve land in `docs/DECISIONS.md`, not just in chat |
+
+> 🇰🇷 자료를 `docs/inputs/`에 넣으면 PROJECT·SPEC 초안·research로 증류됩니다. 포맷 무관(HWPX 포함, 구형 HWP는 변환 요청)·투입 시점 무관(중간에 넣어도 훅이 감지)·재독 없음(원장 대조)·그리고 **문서는 증거일 뿐 서명이 아니라서** 사용자가 확인하기 전엔 `/blueprint`가 계획을 거부합니다.
 
 
 
@@ -179,7 +186,7 @@ COMPASS doesn't just wait for commands — three deterministic channels watch th
 
 | Channel | When | What you see |
 |---|---|---|
-| **Session briefing** | every session start (incl. after `/clear` and `/compact`) | One prioritized suggestion, relayed in Claude's first reply: unprofiled → `/setup` · `[~]` dangling → continue it · uncommitted changes → `/checkpoint` · no SPEC → `/spec` · open tasks → `/next` + the task name · stale map → `/map` note |
+| **Session briefing** | every session start (incl. after `/clear` and `/compact`) | One prioritized suggestion, relayed in Claude's first reply: unprofiled → `/setup` · `[~]` dangling → continue it · uncommitted changes → `/checkpoint` · no SPEC → `/spec` · open tasks → `/next` + the task name. Plus, when they apply, two side notes that never compete with the suggestion: **un-ingested `docs/inputs/` material** and a stale-map `/map` hint |
 | **Unprotected-work counter** | 25 / 50 / 75 edits since the last PROGRESS update | Mid-work nudge: "checkpoint now" — a healthy `/next` cycle refreshes PROGRESS every task, so crossing 25 *is* the warning signal |
 | **Statusline** | always, in the terminal footer | `🧭 COMPASS · Opus · phase:2 — billing · 2open/1wip · 12 edits since ckpt` |
 
@@ -245,6 +252,7 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 1. **Prompts are advisory; hooks are law.** CLAUDE.md rules raise the *probability* of good behavior; only the four hooks *guarantee* theirs (secrets, formatting, bloat warnings, honest task states). That's why both layers exist.
 2. **No system makes 1M-token autonomy flawless.** COMPASS's promise is *recoverability*: any crash, compaction, or `/clear` costs at most the work since the last checkpoint, and any fresh session passes the 2-minute Resume Test. That property, maintained, is what lets projects run for months.
 3. **The map is curated, not generated** — research shows auto-generated repo context files hurt agent performance. Rule 6's same-commit contract is what keeps curation cheap.
+4. **This is an OS for building software, not for arbitrary work.** Non-code deliverables (reports, analyses, documents) can ride the state machine, but three gates don't map onto them: VERIFY means lint/typecheck/tests, the bloat budget only watches source-file extensions, and CODEBASE_MAP assumes code. Use COMPASS for those by all means — just know you are supplying the verification standard yourself. A first-class non-code track is a known gap, not a shipped feature.
 
 ## FAQ
 
@@ -258,4 +266,4 @@ Never overwrite a project wholesale with a newer COMPASS zip. **Yours (never ove
 
 ---
 
-MIT License · COMPASS v1.16.0 · Optimized for solo developers (teams: see the append-style SESSION_LOG and clean-tree stop-gate notes) running Sonnet-as-builder + Opus-as-advisor.
+MIT License · COMPASS v1.17.0 · Optimized for solo developers (teams: see the append-style SESSION_LOG and clean-tree stop-gate notes) running Sonnet-as-builder + Opus-as-advisor.

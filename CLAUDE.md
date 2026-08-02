@@ -56,7 +56,7 @@ IMPORTANT: Rules 1, 4, and 7 are the backbone. If everything else fades from con
 | Do the next piece of work | `/next` |
 | Before saying "done" | `/inspect` |
 | Ending a session or milestone | `/checkpoint` |
-| Have pre-made research / requirement docs | drop them in `docs/inputs/`, then run `/setup` (it ingests them first) |
+| Have pre-made research / requirement docs (RFP, PRD, 조사자료 — any format, any time) | drop them in `docs/inputs/` → `/setup` §0 ingest procedure (`/spec` for one feature). Ledger `docs/inputs/INGESTED.md` prevents re-reading; docs are evidence, never sign-off |
 | First session in a project / after a pivot | `/setup` (profiles the project into `docs/PROJECT.md`) |
 | Starting/continuing work | `/restore` (a light version auto-runs via hook) |
 | System seems broken or ignored | `/healthcheck` |
@@ -79,7 +79,7 @@ IMPORTANT: Rules 1, 4, and 7 are the backbone. If everything else fades from con
 ## Durable State — `docs/`
 
 `PROJECT.md` (project charter — identity auto-injected each session) · `SPEC.md` (what & why) · `PLAN.md` (how) · `TODO.md` (live checklist — `[ ]` todo, `[~]` in progress, `[x]` done, `[!]` blocked + note) · `PROGRESS.md` (rolling status, keep ≤ 60 lines) · `CODEBASE_MAP.md` (where things live & why — decision-level, never a raw file tree) · `DECISIONS.md` (ADR-lite) · `SESSION_LOG.md` (append-only journal) · `BACKLOG.md` (parked ideas)
-Reference docs you bring go in `docs/inputs/` (ingested by `/setup` and `/spec`, not loaded every session). Your own permanent project rules live in `.claude/rules/project-directives.md` — always loaded, survives compaction and `/clear`.
+Reference docs you bring go in `docs/inputs/` (ingested by `/setup` §0 and `/spec`, tracked in `docs/inputs/INGESTED.md`, not loaded every session). Your own permanent project rules live in `.claude/rules/project-directives.md` — always loaded, survives compaction and `/clear`.
 > 🇰🇷 이 파일들만 읽으면 어떤 새 세션도 2분 안에 완전 복구되도록 유지한다.
 
 ## Long-Horizon Protocol (100K–1M+ token projects)

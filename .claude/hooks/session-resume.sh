@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # COMPASS session-resume — injects durable state AND a situation-aware next-step suggestion.
 # 🇰🇷 세션 시작 시 상태 주입 + 현재 상황을 진단해 '다음 명령 딱 하나'를 제안하는 코파일럿 브리핑.
+#     제안은 항상 1개; 미흡수 참고자료/지도 노후는 '부가 알림'이라 제안과 경쟁하지 않는다.
 # SessionStart hook: stdout is added to Claude's context. Fires on startup/restore/clear/compact.
 set -u
 
@@ -59,6 +60,54 @@ if [ -f "$D/SESSION_LOG.md" ] && grep -qE '^## 20[0-9]{2}-' "$D/SESSION_LOG.md" 
   [ -n "$(find "$D/SESSION_LOG.md" -mtime +7 -print 2>/dev/null)" ] && AWAY="yes"
 fi
 
+# Un-ingested reference material: files in docs/inputs/ the ledger doesn't account for.
+# Filename-absent-from-ledger is the strong signal (mtime-independent); newer-than-ledger flags a revision.
+# A missed file becomes a silently lost requirement, so both the ledger match and the scan must be exact:
+# the File column is compared whole-cell (substring matching let `2026.md` hide behind `rfp-2026.md`),
+# and the scan is never truncated without saying so.
+INPUT_NOTE=""
+if [ -d "$D/inputs" ]; then
+  LEDGER="$D/inputs/INGESTED.md"
+  SCAN_CAP=500
+  # First column of every ledger table row, backticks and padding stripped, one per line.
+  # Comments are stripped span-by-span — inline `<!-- … -->` and multi-line blocks alike — so a
+  # how-to comment placed above the table no longer blanks the ledger, while the trailing block
+  # of sample rows still cannot shadow a real file.
+  LEDGER_FILES=""
+  [ -f "$LEDGER" ] && LEDGER_FILES=$(awk '
+    { line = $0
+      while (match(line, /<!--[^\-]*(-[^\-]+)*-*-->/)) {
+        line = substr(line, 1, RSTART-1) substr(line, RSTART+RLENGTH) }
+      if (inc) { if (match(line, /-->/)) { line = substr(line, RSTART+RLENGTH); inc=0 } else next }
+      if (match(line, /<!--/)) { line = substr(line, 1, RSTART-1); inc=1 }
+      n = split(line, c, "|")
+      if (n >= 3) { gsub(/[ \t`]/, "", c[2]); if (c[2] != "") print c[2] } }
+  ' "$LEDGER" 2>/dev/null)
+  PENDING=""; NPEND=0; NSEEN=0
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    NSEEN=$((NSEEN+1))
+    REL="${f#"$D/inputs/"}"
+    case "$REL" in README.md|INGESTED.md|*.gitkeep) continue;; esac
+    LABEL=""
+    if ! printf '%s\n' "$LEDGER_FILES" | grep -qxF "$REL"; then
+      LABEL="$REL"
+    elif [ "$f" -nt "$LEDGER" ]; then
+      LABEL="$REL (revised)"
+    fi
+    [ -n "$LABEL" ] || continue
+    NPEND=$((NPEND+1))
+    [ "$NPEND" -le 5 ] && PENDING="${PENDING:+$PENDING, }$LABEL"
+  done <<EOF
+$(find "$D/inputs" -type f 2>/dev/null | head -n "$SCAN_CAP")
+EOF
+  if [ "$NPEND" -gt 0 ]; then
+    [ "$NPEND" -gt 5 ] && PENDING="$PENDING, +$((NPEND-5)) more"
+    INPUT_NOTE="Note: docs/inputs/ holds un-ingested reference material — ${PENDING}. Ingest it BEFORE interviewing (/setup §0; /spec §0 if it targets one feature), and skip whatever docs/inputs/INGESTED.md already covers."
+    [ "$NSEEN" -ge "$SCAN_CAP" ] && INPUT_NOTE="$INPUT_NOTE Scan stopped at $SCAN_CAP files — list docs/inputs/ yourself, there may be more."
+  fi
+fi
+
 # Map staleness heuristic: TODO moved while the map didn't, across ≥5 completed tasks
 MAP_NOTE=""
 if [ -f "$D/CODEBASE_MAP.md" ] && [ "$D/TODO.md" -nt "$D/CODEBASE_MAP.md" ] 2>/dev/null; then
@@ -75,6 +124,7 @@ echo "--- CO-PILOT ---"
 [ -n "$AWAY" ] && echo "You've been away 7+ days: run /restore first for the deep restore."
 echo "Situation: $WHY"
 echo "Suggested next: $SUGGEST"
+[ -n "$INPUT_NOTE" ] && echo "$INPUT_NOTE"
 [ -n "$MAP_NOTE" ] && echo "$MAP_NOTE"
 echo "(Open your first reply by relaying this suggestion to the user in one line, then proceed. Respond in the user's language, honoring any language directive in .claude/rules/project-directives.md.)"
 

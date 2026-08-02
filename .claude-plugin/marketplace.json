@@ -7,7 +7,7 @@
       "name": "compass",
       "source": "./",
       "description": "Installer/updater for the COMPASS operating system. After installing the plugin, run /compass:init inside your project.",
-      "version": "1.16.0",
+      "version": "1.17.0",
       "license": "MIT",
       "repository": "https://github.com/gmlcjf0326/claude_guide"
     }

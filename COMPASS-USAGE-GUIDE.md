@@ -33,7 +33,7 @@ git init && git add -A && git commit -m "chore: install COMPASS"
 claude 실행 → /effort max → /setup → /healthcheck → /spec 첫 목표
 ```
 
-- `/setup` (프로젝트당 1회): 5~8문 인터뷰로 **프로젝트 헌장**(docs/PROJECT.md) 작성 — 단계·비즈니스모델·품질편향·비타협원칙. 여기서 답한 **영구 지침**은 project-directives.md에 박혀 영원히 로드됩니다. 미리 연구한 문서가 있으면 `docs/inputs/`에 넣고 실행 — 먼저 전부 읽고, 문서가 답한 건 안 묻습니다.
+- `/setup` (프로젝트당 1회): 5~8문 인터뷰로 **프로젝트 헌장**(docs/PROJECT.md) 작성 — 단계·비즈니스모델·품질편향·비타협원칙. 여기서 답한 **영구 지침**은 project-directives.md에 박혀 영원히 로드됩니다. 미리 연구한 문서(RFP·PRD·조사자료, HWPX/PDF/DOCX 포함)가 있으면 `docs/inputs/`에 넣고 실행 — 먼저 읽고 증류한 뒤, 문서가 답한 건 안 묻습니다. **중간에 넣어도 됩니다**(훅이 미흡수분을 감지). 단 문서에서 뽑은 SPEC은 초안이라 당신이 서명하기 전엔 `/blueprint`가 계획을 거부합니다.
 - `/healthcheck`: 훅·명령어 14개·상태파일·게이트를 자가진단. 뭔가 이상하면 언제든 이것부터.
 
 ---
@@ -179,7 +179,7 @@ START_HERE.md           초보 온보딩 / README.md 전체 참조
   rules/   스택별 자동로드 + project-directives.md(항상, 당신의 영구지침)
 docs/                   ★ 당신의 상태 — 업그레이드 시 보존!
   PROJECT SPEC PLAN TODO PROGRESS CODEBASE_MAP DECISIONS SESSION_LOG BACKLOG
-  inputs/(사전연구 투입구) research/(조사 영구보관)
+  inputs/(사전연구 투입구 + INGESTED.md 흡수 원장) research/(조사 영구보관)
 guides/00–16            심층 근거 (07 장기전 · 08 도커 · 13 앱수익화 · 14 실전대본 · 16 공공디자인)
 templates/              문서 템플릿 · docker/ · ci/ · design/(중립 토큰 + KRDS 토큰·데모)
 ```
