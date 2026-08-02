@@ -44,7 +44,7 @@ Copy `docs/` from the payload wholesale (it ships pre-seeded), then verify `.git
 
 ## 4. Verify and hand off
 
-1. Run the project healthcheck basics yourself: `ls .claude/commands/*.md` (expect 14), `bash -n .claude/hooks/*.sh`, and the guard probe `echo '{"tool_input":{"file_path":"x.pem"}}' | bash .claude/hooks/guard-secrets.sh; echo $?` → expect 2.
+1. Run the project healthcheck basics yourself: `ls .claude/commands/*.md` (expect 14), `bash -n .claude/hooks/*.sh`, and the guard probe `X=pem; echo "{\"tool_input\":{\"file_path\":\"x.$X\"}}" | bash .claude/hooks/guard-secrets.sh; echo $?` → expect 2. (Build the payload via `$X`: a literal `.pem` in the command string trips the guard's shell scanner and the probe never reaches the file-path branch.)
 2. Tell the user: hooks and the statusline activate on the NEXT session start (settings.json is read at startup) — restart `claude` in this project.
 3. Report what was installed/preserved in ≤ 8 lines (versions, preserved files, gitignore changes).
 4. Suggest the next step: NEW → "restart claude, then run /setup"; UPGRADE → "restart claude, then run /healthcheck".

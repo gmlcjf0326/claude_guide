@@ -69,6 +69,14 @@ The default distribution pins **no model**, so it runs unmodified on any plan (P
 
 That list is also complete for manual enable/disable — audit with `grep -rn "model" .claude/`.
 
+## 6b. Already have material? — `docs/inputs/`
+
+If you hold an RFP, a PRD, deep-research notes, or meeting minutes, **there is no reason to start the interview from a blank page.** Put the files in `docs/inputs/` and run `/setup` — it reads them first, distills them into PROJECT / a SPEC draft / research notes, and then asks only about what your documents *didn't* answer.
+
+- **Formats**: `.md` is most accurate, but `.pdf` `.docx` `.pptx` `.xlsx` `.hwpx` and screenshots all work. The one exception is legacy binary `.hwp` — rather than guess, it asks you to re-export as `.hwpx`/`.pdf`.
+- **Timing**: you can drop files in later too. The SessionStart hook tells you when material hasn't been ingested yet.
+- **The part that matters**: a SPEC drafted from documents is a **draft**. `/blueprint` refuses to plan on it until you have confirmed the requirements item by item and signed off — the guard against a document you never read becoming code you now ship.
+
 ## 7. The 30-minute practice mission — learn by doing (strongly recommended)
 
 Install into an empty practice folder, then follow along:

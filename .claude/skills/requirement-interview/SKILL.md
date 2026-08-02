@@ -41,6 +41,23 @@ After every interview round, state a confidence score:
 4. **Declare defaults for the indifferent.** "If you have no preference, I'll assume A because <reason>" — this keeps momentum without hiding assumptions (Core Rule 1).
 5. **Close every round** with: confidence score, what's still unknown, and whether another round is needed.
 
+## When neither of you knows the answer
+
+Some questions cannot be answered by asking harder: market sizing, whether a library actually supports X, quota and pricing ceilings, regulatory requirements, post-cutoff platform behavior. Guessing is forbidden (Rule 1) and stalling is useless — so **switch modes**: run the `research` skill (or `/research <topic>` for anything decision-shaping), persist the finding to `docs/research/`, then resume the round citing it.
+
+**Hard rule:** confidence may not cross 90% while an *unresearched* unknown could still change the architecture. "The user didn't know either" is not a reason to proceed — it is the trigger to go find out.
+> 🇰🇷 사용자도 나도 모르는 사실에 막히면 추측도 정체도 답이 아니다 — /research로 전환해 확인하고, 결과를 디스크에 남긴 뒤 라운드를 재개한다.
+
+## Interviewing on top of documents (docs/inputs/)
+
+When a SPEC draft already exists because `/setup` §0 distilled the user's own documents, the interview's job inverts — from **elicitation** to **verification**:
+
+1. Read the document-derived MUSTs back, grouped by source file, and get an explicit confirm / deny / amend on each. Documents are *evidence*; only the user is sign-off.
+2. Anything the user does not confirm stays visibly marked as unconfirmed — never promote it silently.
+3. Interview only the genuine gaps and the conflicts §0e surfaced. Re-asking what the documents already answered burns the user's goodwill and teaches them the ingest was theater.
+4. The SPEC stays `Signed off by user: ☐` until the user approves it in this conversation. `/blueprint` refuses to plan on an unsigned SPEC.
+> 🇰🇷 문서에서 뽑은 요구사항은 '확인 대상'이지 '확정 사실'이 아니다. 문서는 증거, 서명은 사람.
+
 ## The Better-Direction Protocol (Core Rule 2)
 
 The user may be asking for X when Y serves their goal better. When you detect this:
@@ -62,3 +79,4 @@ At ≥ 90% confidence, write `docs/SPEC.md` per `templates/SPEC.template.md`. Re
 - **Assumption smuggling**: proceeding on unstated guesses. State them or ask them.
 - **Premature solutioning**: designing during the interview. Capture ideas as SPEC notes; design happens in `/blueprint`.
 - **Confidence inflation**: claiming 90% to escape the interview. The number must survive the "could I write acceptance criteria right now?" test.
+- **Document laundering**: treating a requirement as settled because a document in `docs/inputs/` said so. The user wrote or collected that document; they still have to confirm it survived contact with the plan.
